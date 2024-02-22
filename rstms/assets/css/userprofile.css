@@ -1,0 +1,223 @@
+body{margin-top:20px;
+background-color:#f2f6fc;
+color:#69707a;
+}
+.nav-borders{
+	margin-left: 40px;
+	padding-top: 20px;
+}
+.nav-borders .nav-link{
+	text-decoration: none;
+}
+#profile-form1, #profile-form2 {
+    vertical-align: top!important;
+}
+#profile-form1{
+	display: inline-block!important;
+    margin-left: 50px;
+    margin-top: 20px;
+    height: auto;
+    width: 380px;
+    vertical-align: top;
+}
+.col-xl-4{
+	margin-left: 50px;
+	margin-top: 20px;
+	height: 400px;
+	width: 380px;
+}
+.col-xl-4 .card-header, .text-center{
+	text-align: center;
+}
+.text-center{
+	padding-top: 30px;
+	padding-bottom: 50px;
+}
+.btn-primary{
+	background-color: #14f5db;
+	padding: 10px;
+	border: none;
+	border-radius: 10px;
+	color: #ffff;
+}
+#profile-form2{
+	display: inline-block;
+    margin-left: 30px;
+    margin-top: 20px!important; 
+    width: 800px!important; 
+    vertical-align: top;
+}
+.card-header{
+	text-align: center;
+}
+.small{
+	margin-left: 25px!important;
+	margin-top: 10%!important;
+}
+.form-control{
+	width: 100%!important;
+	margin-left: 10px!important;
+}
+.img-account-profile {
+    height: 10rem;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.card {
+    box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.card .card-header {
+    font-weight: 500;
+}
+.card-header:first-child {
+    border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+    padding: 1rem 1.35rem;
+    margin-bottom: 0;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+.form-control, .dataTable-input {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #69707a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c5ccd6;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.35rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.nav-borders .nav-link.active {
+    color: #0061f2;
+    border-bottom-color: #0061f2;
+}
+.nav-borders .nav-link {
+    color: #69707a;
+    border-bottom-width: 0.125rem;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+#action-btn{
+    margin-top: 15px;
+    margin-left: 47%!important;
+    margin-bottom: 25px;
+}
+#footer h5 {
+text-align: center;
+font-size: 12px!important;
+padding: 5px!important;
+font-weight: 500;
+color: #fff;
+background: rgb(65, 65, 65);
+}
+#footer{
+    margin: 0px!important;
+    padding: 0px!important;
+}
+/*CSS end Myprofile*/
+
+/*CSS start Notification*/
+
+/* Notification Styles */
+.container {
+    margin-top: 50px;
+}
+.notification {
+    position: relative;
+    padding: 15px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.notification .not-icon {
+    background-color: #f8bbd0;
+    color: #fff;
+    border-radius: 50%;
+    padding: 20px;
+    font-size: 24px;
+    margin-right: 20px;
+}
+
+.notification h4 {
+    margin: 0;
+    color: #333;
+}
+
+.notification p {
+    margin: 5px 0 0;
+    color: #777;
+}
+
+.notification.success .not-icon {
+    background-color: #81c784;
+}
+
+.notification.warning .not-icon {
+    background-color: #ffb74d;
+}
+
+.notification.danger .not-icon {
+    background-color: #e57373;
+}
+
+/* Font Awesome */
+.not-icon i {
+    line-height: 1;
+}
+/* Close Button Styles */
+.close-btn {
+    margin-left: auto;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.close {
+    font-size: 24px;
+    color: #333;
+}
+
+/* Close Button Hover Styles */
+.close:hover {
+    color: #ff0000;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .notification {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .notification .not-icon {
+        margin-bottom: 15px;
+    }
+}
+/*CSS end Notification*/
+/*CSS start ChangePassword*/
+/*CSS end ChangePassword*/

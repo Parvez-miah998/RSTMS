@@ -1,0 +1,197 @@
+body{
+			display: flex;
+			background-color: #faebfc;
+		}
+    .container {
+    	margin-left: 200px; 
+    	margin-right: 200px; 
+    	margin-top: 50px; 
+    	padding-top: 0px; 
+    	width: 750px; 
+    	height: 450px;
+	    background-image: url('../image/image3.jpg');
+	    background-size: 70% 100%; 
+	    background-position: right;
+	    background-repeat: no-repeat;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    border-radius: 40px;
+	    border: 4px solid black;
+    }
+    .row {
+    	color: black;
+    	margin-left: -350px;
+    }
+    .row a{
+    	color: black; 
+    	margin-left: -8px;
+    	margin-top: 0px;
+    	padding-top: 0px;
+    	padding-bottom: 30px!important;
+    	font-size: 24px;
+    	font-weight: bolder;
+    	font-family: Matura MT Script Capitals;
+    	text-decoration: none;
+    }
+    .row h1{
+    	color: black;
+    	margin-top: 100px; 
+    	margin-left: 120px;
+    }
+    .row h1 span{
+    	color: white;
+    }
+    #name, #contact, #email, #password, #confirm_password{
+    	height: 40px;
+    	width: 260px; 
+    	border-radius: 20px;
+    	border: none;
+    	box-shadow:  0 0 10px 3px rgba(0, 0, 0, 0.3);
+    }
+    .form-control{
+    	margin-left: 90px;
+    }
+    .form-control .button{
+    	height: 40px;
+    	width: 100px;
+    	padding: 6px;
+    	margin-left: 60px;
+    	border-radius: 20px;
+    	background-color: #6dd18d;
+    	font-weight: bolder;
+    	color: black;
+    }
+    .footer-form-controler h5{
+    	color: black;
+    	margin-left: 97px;
+    	padding: 0px;
+    }
+    .footer-form-controler h5 a{
+    	text-decoration: none;
+    	font-family: Arial;
+    	font-size: 14px;
+    	font-weight: 200;
+    	color: white;
+    	padding-left: 6px!important;
+    }
+    .footer-form-controler h5 a{
+    	white-space: pre !important;
+    	padding-left: 5px;
+    }
+    .container-fluid .form-data h6{
+    	margin-top: 10px;
+    	margin-left: 95px;
+    	font-size: 12px;
+    }
+    .container-fluid .form-data h6 a{
+    	text-decoration: none;
+    	font-family: Arial;
+    	font-weight: 400;
+    	font-size: 14px;
+    	padding-left: 8px;
+    	color: white;
+    }
+
+/*Design for Login Page End*/
+
+/*Design for Registration Page Start*/
+#form-reg{
+	margin-left: 200px; 
+    margin-right: 200px; 
+    margin-top: 50px; 
+    padding: 0px; 
+    width: 750px; 
+    height: 550px;
+	background-image: url('../image/image4.jpg');
+	background-size: 70% 100%; 
+	background-position: left;
+	background-repeat: no-repeat;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 40px;
+	border: 4px solid black;
+}
+#row1{
+	 color: black;
+	 margin-left: 350px;
+}
+#row1 .logo{
+	color: black; 
+	margin-left: 220px;
+	margin-top: 0px;
+	margin-bottom: 30px;
+	padding-left: 10px;font-size: 24px;
+	font-weight: bolder;
+	font-family: Matura MT Script Capitals;
+	text-decoration: none;
+}
+#row1 h1{
+	margin-top: 20px;
+	margin-left: 50px;
+}
+#row1 #row2{
+	margin-left: -40px;
+}
+.footer-form-controler .text a{
+	color: blue;
+	font-weight: 200;
+	padding-left: 5px;
+}
+/*Design for Registration Page End*/
+
+/*Design for Forgetpass Page start*/
+#form-fpass{
+	margin-left: 200px; 
+    margin-right: 200px; 
+    margin-top: 50px; 
+    padding: 0px; 
+    width: 750px; 
+    height: 350px;
+	background-image: url('../image/image5.jpg');
+	background-size: 70% 100%; 
+	background-position: right;
+	background-repeat: no-repeat;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 40px;
+	border: 4px solid black;
+}
+.title {
+    color: black;
+    margin-left: -350px;
+}
+.title a{
+    color: black; 
+    margin-left: -8px;
+    margin-top: 0px;
+    margin-bottom: 100px;
+    padding-bottom: 50px!important;
+    font-size: 24px;
+    font-weight: bolder;
+    font-family: Matura MT Script Capitals;
+    text-decoration: none;
+}
+.title h1{
+	margin-top: 55px!important;
+	margin-left: 100px;
+	padding-top: 0px!important;
+}
+.title h1 span{
+	color: white;
+}
+.text-center .button{
+    	height: 40px;
+    	width: 100px;
+    	padding: 6px;
+    	margin-left: 60px;
+    	margin-bottom: 60px;
+    	border-radius: 20px;
+    	background-color: #6dd18d;
+    	font-weight: bolder;
+    	color: black;
+    }
+/*Design for Forgetpass Page End*/
+
