@@ -1,6 +1,7 @@
 <?php
     session_start();
     include 'includes/header.php';
+    require('../config.php');
     include ('includes/dbconnection.php');
     if (!isset($_SESSION['user'])) {
         header("Location: login.php");
@@ -46,7 +47,7 @@ if ($user_row = $user_result->fetch_assoc()) {
                 </thead>
                 <tbody>
                     <?php
-                    // $totalAmount = 0;
+                    $totalAmount = 0;
                     while ($row = mysqli_fetch_assoc($order_result)) {
                         echo "<tr>";
                         echo "<td>{$row['order_id']}</td>";
@@ -57,34 +58,45 @@ if ($user_row = $user_result->fetch_assoc()) {
                         echo "<td>{$row['f_vat']} &percnt;</td>";
                         echo "<td>&#36; {$row['total_amount']}</td>";
                         echo "<td>{$row['o_date']}</td>";
-                        echo "<td>{$row['t_name']}</td>";   
-                        echo "<td>{$row['payment_status']}</td>";   
+                        echo "<td>{$row['t_name']}</td>";
+                        if (empty($row['payment_status'])) {
+                            $order_id = $row['order_id'];
+                            $totalAmount_sql = $conn->prepare("SELECT amount FROM tbl_payment WHERE order_id = ?");
+                            $totalAmount_sql->bind_param("s", $order_id);
+                            $totalAmount_sql->execute();
+                            $totalAmount_result = $totalAmount_sql->get_result();
+
+                            if ($totalAmount_row = $totalAmount_result->fetch_assoc()) {
+                                $amount = number_format($totalAmount_row['amount'], 2);
+                                echo "<td>";
+                                echo "Payable Amount: $amount";
+                                echo '<form action="../thankyou.php" method="POST">';
+                                echo '<input type="hidden" name="total_amount" value="' . $amount . '">';
+                                echo '<script 
+                                        src="https://checkout.stripe.com/checkout.js"
+                                        class="stripe-button"
+                                        data-key="' . $publishableKey . '"
+                                        data-amount="' . $amount * 100 . '"
+                                        data-name="KING RESTAURANT"
+                                        data-description="A1 Restaurent"
+                                        data-image="https://img.freepik.com/premium-vector/cute-panda-paws-up-wall-panda-face-cartoon-icon_42750-498.jpg"
+                                        data-currency="usd">
+                                     </script>';
+                                echo '</form>';
+                                echo "</td>";
+                            }
+                        } 
+                        else {
+                            echo "<td>{$row['payment_status']}</td>";
+                        }  
+                           
                         echo "</td>";
                         echo "</tr>";
-                        // $totalAmount += $row['total_amount'];
                       }
-                    ?>
-                    <!--Total Amount-->           
-                    <!-- <th>Total Amount</th>
-                    <?php
-                        echo "<td> &#36; ".number_format($totalAmount, 2)."</td>";
-                    ?>
-                  </tr> -->   
+                    ?>   
                 </tbody>
             </table>
-            <!-- Total Amount Row -->
-<!-- <table class="all-booked tbl-pay">
-    <tbody>
-        <tr>
-            <th>Total Cost</th>
-            <td colspan="8">&#36; <?php echo number_format($totalAmount, 2); ?></td>
-        </tr>
-    </tbody>
-</table> -->
         </div>
-        <!-- <div class="pay">
-            <form> <button type="submit" name="payment" id="payment" class="btn-payment">Payment</button> </form>
-        </div> -->
     </div>
 </div>
 <?php }

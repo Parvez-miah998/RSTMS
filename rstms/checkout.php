@@ -27,10 +27,12 @@ if (isset($_POST['order_confirm'])) {
             $fetch_row = $fetch_result->fetch_assoc();
             $ta_id = $fetch_row['ta_id'];
 
-            $move_sql = $conn->prepare("INSERT INTO tbl_payment (order_id, f_title, f_disctprice, total_amount, o_quantity, f_vat, o_date, u_id, u_name, ta_id, t_name) SELECT ?, f_title, f_disctprice, total_amount, o_quantity, f_vat, o_date, u_id, u_name, ?, ? FROM tbl_order WHERE u_id = ?");
+            $totalAmount = $_SESSION['totalAmount'];
+
+            $move_sql = $conn->prepare("INSERT INTO tbl_payment (order_id, f_title, f_disctprice, total_amount, o_quantity, f_vat, o_date, u_id, u_name, ta_id, t_name, amount) SELECT ?, f_title, f_disctprice, total_amount, o_quantity, f_vat, o_date, u_id, u_name, ?, ?, ? FROM tbl_order WHERE u_id = ?");
 			$order_id = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, 8);
 			$_SESSION['order_id'] = $order_id;
-            $move_sql->bind_param("sssi", $order_id, $ta_id, $selected_table, $user_id);
+            $move_sql->bind_param("sssdi", $order_id, $ta_id, $selected_table, $totalAmount, $user_id);
             if ($move_sql->execute()) {
                 $delete_sql = $conn->prepare("DELETE FROM tbl_order WHERE u_id = ?");
                 $delete_sql->bind_param("i", $user_id);
@@ -80,53 +82,53 @@ if (isset($_POST['order_confirm'])) {
 		</div>
 				<?php
 
-					if (isset($_SESSION['total_amount'])) {
-						$totalAmount = $_SESSION['totalAmount'];
-					    if (isset($_SESSION['user'])) {
-					        $user_email = $_SESSION['user'];
-					        
-					        $sql = $conn->prepare("SELECT * FROM users WHERE u_email = ?");
-					        $sql->bind_param("s", $user_email);
-					        
-					        if ($sql->execute()) {
-					            $result = $sql->get_result();
+                if (isset($_SESSION['totalAmount'])) {
+                    $totalAmount = $_SESSION['totalAmount'];
+                    if (isset($_SESSION['user'])) {
+                        $user_email = $_SESSION['user'];
+                        // Assuming $conn is your database connection
+                        
+                        $sql = $conn->prepare("SELECT * FROM users WHERE u_email = ?");
+                        $sql->bind_param("s", $user_email);
+                        
+                        if ($sql->execute()) {
+                            $result = $sql->get_result();
 
-					            if ($result && $result->num_rows > 0) {
-					                $row = $result->fetch_assoc();
-					                $user_name = $row['u_name'];
-					            } else {
-					                echo "No data found!";
-					            }
-					        } else {
-					            echo "Error executing the SQL query: " . $sql->error;
-					        }
+                            if ($result && $result->num_rows > 0) {
+                                $row = $result->fetch_assoc();
+                                $user_name = $row['u_name'];
+                            } else {
+                                echo "No data found!";
+                            }
+                        } else {
+                            echo "Error executing the SQL query: " . $sql->error;
+                        }
 
-					        $sql->close();
-					        $conn->close();
-					    } else {
-					        header('Location: users/login.php');
-					        exit();
-					    }
-					}
-					else{
-						echo "No Total amount found!";
-					}
-				?>
+                        $sql->close();
+                        // $conn->close(); // Assuming you don't want to close the connection here
+                    } else {
+                        header('Location: users/login.php');
+                        exit();
+                    }
+                } else {
+                    echo "No Total amount found!";
+                }
+            ?>
 
-		<div class="pay-body">
-			<form action="thankyou.php" method="POST">
-				<div class="form-data">
-					<label>Name: </label>
-					<input type="text" name="u_name" id="u_name" value="<?php echo isset($row['u_name']) ? $row['u_name'] : ''; ?>">
-				</div>
-				<div class="form-data">
-					<label>Email: </label>
-					<input type="text" name="u_email" id="u_email" value="<?php echo isset($row['u_email']) ? $row['u_email'] : ''; ?>">
-				</div>
-				<div class="form-data">
-					<label>Total Amount: </label>
-					<input type="text" name="u_email" id="u_email" value="&#36; <?php echo $totalAmount; ?>">
-				</div>
+            <div class="pay-body">
+                <form action="thankyou.php" method="POST">
+                    <div class="form-data">
+                        <label>Name: </label>
+                        <input type="text" name="u_name" id="u_name" value="<?php echo isset($user_name) ? $user_name : ''; ?>">
+                    </div>
+                    <div class="form-data">
+                        <label>Email: </label>
+                        <input type="text" name="u_email" id="u_email" value="<?php echo isset($user_email) ? $user_email : ''; ?>">
+                    </div>
+                    <div class="form-data">
+                        <label>Total Amount: </label>
+                        <input type="text" name="total_amount" id="total_amount" value="<?php echo isset($totalAmount) ? '$'.$totalAmount : ''; ?>">
+                    </div>
 				<div class="btn-pay">
 					<script 
 						src="https://checkout.stripe.com/checkout.js"
