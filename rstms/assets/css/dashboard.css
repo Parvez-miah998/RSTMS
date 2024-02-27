@@ -1,0 +1,86 @@
+	body{
+			font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+		}
+		.navbar {
+	        background-color: #333;
+	        color: #fff;
+	        padding: 10px;
+	    }
+	    .navbar .row {
+	        display: flex;
+	        align-items: center;
+	        justify-content: space-between;
+	    }
+	    .logo a {
+	        margin: 0;
+	        font-size: 24px;
+	        font-family: Matura MT Script Capitals;
+	        color: #fff;
+	        text-decoration: none;
+	    }
+	    .admin-prof {
+	        display: flex;
+	        align-items: center;
+	    }
+	    .admin-prof img {
+	        width: 40px;
+	        height: 40px;
+	        border-radius: 50%;
+	        margin-right: 5px;
+	    }
+	    .admin-details {
+	        text-align: right;
+	    }
+	    .admin-name {
+	    	display: inline-block;
+	        font-weight: bold;
+	        margin-bottom: 5px; 
+	    }
+	    .admin-email {
+	    	display: inline-block;
+	        font-size: 14px;
+	    }
+		.side-bar {
+		    background-color: #333;
+		    height: 350px; 
+		    width: 65px;
+		    margin-left: 2px;
+		    margin-bottom: 20px;
+		    border-radius: 40px;
+		    float: left;
+		}
+
+		.bar {
+		    margin-left: 20px;
+		    padding-top: 20px;
+		}
+
+		.bar a {
+		    display: inline-block;
+		    text-decoration: none;
+		    color: #fff;
+		    cursor: pointer;
+		}
+
+		.btn button {
+		    background-color: #f24f46;
+		    color: #fff;
+		    border-radius: 4px;
+		}
+		.fa-gauge,
+		.fa-utensils,
+		.fa-ice-cream,
+		.fa-chair,
+		.fa-book-atlas,
+		.fa-key{
+			font-size: 24px;
+		}
+		.fa-arrow-right-from-bracket {
+		    color: #fc0b03;
+		    font-size: 24px;
+		}
+		
+

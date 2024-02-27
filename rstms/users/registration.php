@@ -93,7 +93,7 @@
 <body>
 	<div class="container" id="form-reg">
 		<div class="row" id="row1">
-			<a href="#" class="logo">Kryzotech</a><br>
+			<a href="#" class="logo">BIGTree</a><br>
 			<br><h1>Registration Here!</h1>
 			<div class="container-fluid" id="row2">
 			<form action="" method="POST">

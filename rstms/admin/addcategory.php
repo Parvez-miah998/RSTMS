@@ -1,5 +1,6 @@
 <?php
     include('includes/header.php');
+    include('includes/sidebar.php');
     if (!isset($_SESSION['admin_email'])) {
         header("Location: ../users/login.php");
         exit();
@@ -94,6 +95,8 @@
 			</form>
 		</div>
 	</div>
+    </div>
+    </div>
 
 	<!--Style for add category start-->
 	<style>
@@ -102,6 +105,7 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            top: 0px;
         }
 
         .container {
@@ -122,6 +126,7 @@
 
         .form-controller {
             padding: 20px;
+            flex: 1;
         }
 
         form {
@@ -164,13 +169,15 @@
         button:hover {
             background-color: #2980b9;
         }
-        .btn-primary{
-        	padding: 5px;
-        	background-color: #62f5e6;
-        	border-radius: 6px;
-        	box-shadow: 0 2px 2px 0 #cccc;
-        	cursor: pointer;
+
+        .btn-primary {
+            padding: 5px;
+            background-color: #62f5e6;
+            border-radius: 6px;
+            box-shadow: 0 2px 2px 0 #cccc;
+            cursor: pointer;
         }
+
     </style>
 	<!--Style for add category end-->
 

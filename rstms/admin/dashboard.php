@@ -1,27 +1,92 @@
 <?php
 	include('includes/header.php');
+	include('includes/sidebar.php');
 	if (!isset($_SESSION['admin_email'])) {
 	    header("Location: ../users/login.php");
 	    exit();
 	}
 ?>
 
+<div class="dashboard">
+	<div class="content">
+        <div class="total-order">
+            <div class="order-head">
+                <h4>Total User</h4>
+            </div>
+            <div class="order-body">
+            	<h4>5</h4>
+                <a href="#">View</a>
+            </div>
+        </div>
+        <div class="total-order">
+            <div class="order-head">
+                <h4>Total Order</h4>
+            </div>
+            <div class="order-body">
+            	<h4>5</h4>
+                <a href="#">View</a>
+            </div>
+        </div>
+        <div class="total-order">
+            <div class="order-head">
+                <h4>Total Booked table</h4>
+            </div>
+            <div class="order-body">
+            	<h4>5</h4>
+                <a href="#">View</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-	<h1 style="font-size: 48px;text-align: center;color: greenyellow;">Wlecome to Dashbord</h1>
-	<p style="font-size: 18px;text-align: center;color: green; margin-top: 12px;">Work in Porgress</p>
+<!--Style for dasboard start-->
 
+<style type="text/css">
+.content {
+        display: flex;
+        justify-content: space-between;
+        max-width: 900px;
+        margin: 0 auto;
+        margin-top: 35px;
+    }
 
-	<form action="includes/logout.php" method="POST">
-		<div class="btn" style="text-align: center; margin-bottom: 10px;">
-			<button type="submit" id="submit" name="submit" class="btn btn-primary">Logout</button>
-		</div>
-	</form>
-	<div class="category" style="text-align: center; margin-bottom: 20px;">
-		<a href="category.php" style="text-decoration: none; margin: 15px; padding: 5px;">Category</a>
-		<a href="foodmenu.php" style="text-decoration: none; margin: 15px; padding: 5px;">Food Menu</a>
-		<a href="changepass.php" style="text-decoration: none; margin: 15px; padding: 5px;">Change Password</a>
-		<a href="table.php" style="text-decoration: none; margin: 15px; padding: 5px;">Table & Seats</a>
-		<a href="bookedtable.php" style="text-decoration: none; margin: 15px; padding: 5px;">Booked Table</a>
-	</div>
+    .total-order {
+        flex-basis: calc(33.33% - 20px);
+        height: 150px;
+        border-radius: 10px;
+        background-color: gray;
+        margin-bottom: 20px;
+    }
+
+    .order-head {
+        text-align: center;
+/*        padding-top: 5px;*/
+    }
+
+    .order-body {
+        text-align: center;
+/*        padding-top: 5px;*/
+    }
+
+    .order-body a {
+        text-decoration: none;
+        color: #000;
+    }
+    .total-order:nth-child(1) {
+        background-color: #34a1fa;
+    }
+
+    .total-order:nth-child(2) {
+        background-color: #34fab5;
+    }
+
+    .total-order:nth-child(3) {
+        background-color: #fa3462;
+    }
+</style>
+
+<!--Style for dasboard end-->
+	
+
 
 <?php include('includes/footer.php'); ?>

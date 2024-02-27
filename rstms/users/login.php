@@ -87,7 +87,7 @@ if (isset($_POST['login'])) {
 <body>
 	<div class="container">
 		<div class="row">
-			<a href="#">Kryzotech</a><br>
+			<a href="#">BIGTree</a><br>
 			<h1>Login <span>Here!</span> </h1>
 			<?php if (isset($_SESSION['error'])): ?>
 			  <div class="error-message"><?php echo $_SESSION['error']; ?></div>

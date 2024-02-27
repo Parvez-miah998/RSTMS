@@ -1,5 +1,5 @@
 <footer id="footer" style="margin: 0px;padding: 1px;">
-        <h5 style="text-align: center;">Copyright &copy; 2024 || Powered by Kryzotech</h5>
+        <h5 style="text-align: center;">Copyright &copy; 2024 || Powered by BIGTree</h5>
     </footer>
 </body>
 <!-- 

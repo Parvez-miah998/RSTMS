@@ -1,5 +1,6 @@
 <?php
 	include('includes/header.php');
+    include('includes/sidebar.php');
 	if (!isset($_SESSION['admin_email'])) {
         header("Location: ../users/login.php");
         exit();
@@ -128,12 +129,13 @@
         }
 
         .container {
-            width: 90%;
+            width: 89%;
             margin: auto;
 /*            background-color: #fff;*/
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
+            margin-left: 100px;
             margin-top: 50px;
             margin-bottom: 50px;
         }

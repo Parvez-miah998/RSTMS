@@ -73,7 +73,7 @@
 <body>
     <div class="container" id="form-fpass">
         <div class="title" id="fpass">
-            <a href="#">Kryzotech</a><br>
+            <a href="#">BIGTree</a><br>
             <h1>Forgot<span> Password</span> </h1>
             <div class="container-fluid">
             <form action="" method="POST">
