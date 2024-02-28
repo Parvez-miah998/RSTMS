@@ -20,6 +20,15 @@
         </div>
         <div class="total-order">
             <div class="order-head">
+                <h4>Total User</h4>
+            </div>
+            <div class="order-body">
+                <h4>5</h4>
+                <a href="#">View</a>
+            </div>
+        </div>
+        <div class="total-order">
+            <div class="order-head">
                 <h4>Total Order</h4>
             </div>
             <div class="order-body">
@@ -37,6 +46,44 @@
             </div>
         </div>
     </div>
+    <div class="content">
+        <div class="total-order">
+            <div class="order-head">
+                <h4>Feed Back</h4>
+            </div>
+            <div class="order-body">
+                <h4>5</h4>
+                <a href="#">View</a>
+            </div>
+        </div>
+        <div class="total-order">
+            <div class="order-head">
+                <h4>Contact Us</h4>
+            </div>
+            <div class="order-body">
+                <h4>5</h4>
+                <a href="#">View</a>
+            </div>
+        </div>
+        <div class="total-order">
+            <div class="order-head">
+                <h4>Total Cost</h4>
+            </div>
+            <div class="order-body">
+                <h4>5</h4>
+                <a href="#">View</a>
+            </div>
+        </div>
+        <div class="total-order">
+            <div class="order-head">
+                <h4>Total Cost</h4>
+            </div>
+            <div class="order-body">
+                <h4>5</h4>
+                <a href="#">View</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--Style for dasboard start-->
@@ -45,13 +92,13 @@
 .content {
         display: flex;
         justify-content: space-between;
-        max-width: 900px;
+        max-width: 90%;
         margin: 0 auto;
         margin-top: 35px;
     }
 
     .total-order {
-        flex-basis: calc(33.33% - 20px);
+        flex-basis: calc(25% - 20px);
         height: 150px;
         border-radius: 10px;
         background-color: gray;

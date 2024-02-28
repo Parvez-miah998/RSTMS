@@ -221,7 +221,7 @@
         }
         .search-btn{
         	margin-bottom: 20px;
-        	margin-left: 82%;
+        	margin-left: 80%;
 
         }
     </style>
