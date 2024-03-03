@@ -88,30 +88,31 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>KING Restaurant</title>
     <link rel="icon" type="image/x-icon" href="../assets/icons/icon1.svg">
-	<link rel="stylesheet" type="text/css" href="../assets/css/userlogin.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/rfl.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 	<div class="container" id="form-reg">
 		<div class="row" id="row1">
-			<a href="#" class="logo">BIGTree</a><br>
+			<a href="#" class="logo"><span style="color: #57f745; font-family: Matura MT Script Capitals;">K</span><i class="fa-solid fa-crown" style="color: #faee6b;"></i><span style="color: #15e2ed;font-family: Algerian;">N</span><span style="color: #ed1548;font-family: Lucida Sans;">G</span></a><br>
 			<br><h1>Registration Here!</h1>
 			<div class="container-fluid" id="row2">
 			<form action="" method="POST">
 				<div class="form-data">
 					<div class="form-control">
-						<input type="text" name="u_name" id="name" class="text-white text-center mt-2 p-3" placeholder="   Enter Your Name" required>
+						<input type="text" class="pa" name="u_name" id="name" class="text-white text-center mt-2 p-3" placeholder="   Enter Your Name" required>
 					</div><br>
 					<div class="form-control">
-						<input type="text" name="u_contact" id="contact" placeholder="   Enter Your Contact No." required>
+						<input type="text" class="pa" name="u_contact" id="contact" placeholder="   Enter Your Contact No." required>
 					</div><br>
 					<div class="form-control">
-						<input type="email" name="u_email" id="email" placeholder="   Enter Your Email" required>
+						<input type="email" class="pa" name="u_email" id="email" placeholder="   Enter Your Email" required>
 					</div><br>
 					<div class="form-control">
-						<input type="password" name="u_password" id="password" placeholder="   Password" required>
+						<input type="password" class="pa" name="u_password" id="password" placeholder="   Password" required>
 					</div><br>
 					<div class="form-control">
-						<input type="password" name="confirm_password" id="confirm_password" placeholder="   Confirm Password" required>
+						<input type="password" class="pa" name="confirm_password" id="confirm_password" placeholder="   Confirm Password" required>
 					</div><br>
 					<div class="form-control">
 						<!-- <label for="password">Confirm Password</label> -->

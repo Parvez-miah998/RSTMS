@@ -1,0 +1,166 @@
+body{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	height: auto;
+}
+.container{
+	display: flexbox;
+	border: .1px solid rgba(163, 163, 163, 0.506);
+	background-image: url('../image/image35.jpg');
+	background-size: cover; 
+	background-repeat: no-repeat;
+	justify-content: center;
+	border-radius: 10px;
+	padding: 10px;
+	font-family: Arial;
+}
+.container .title{
+	display: flex;
+	justify-content: space-between;
+	gap: 50px;
+	margin: 10px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.container .title h1{
+	margin-top: 0px;
+}
+/*.container .title h5::before{
+	content: "";
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 3px;
+	background: linear-gradient(to right, #1b9bd6, #1b82d6);
+}*/
+.container .title h6{
+	font-size: 15px;
+	font-weight: 600;
+	padding-left: 20px;
+}
+.container .title h6 a{
+	text-decoration: none;
+	color: #1b82d6;
+}
+.container .title h6 a:hover{
+	text-decoration: none;
+	color: #1b9bd6;
+}
+.container .form{
+	padding: 10px;
+}
+.container .form .form-data{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 10px;
+}
+.container .form .user-details{
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 10px;
+}
+.container .form .user-details label{
+	font-size: 16px;
+	padding-bottom: 5px;
+}
+.container .form .user-details input{
+	height: 30px;
+	width: 220px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+	font-size: 12px;
+	padding-left: 5px;
+	box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+	transition: all 120ms ease-out 0s;
+}
+.container .form .user-details input:focus{
+	box-shadow: 0px 0px 0px 1px #1b9bd6;
+}
+.btn{
+	padding: 10px;
+}
+.btn .btn-secondary{
+	background-color: #42eb6c;
+	border-radius: 4px;
+	font-weight: 700;
+	cursor: pointer;
+}
+.btn input{
+	display: flex;
+	justify-content: center;
+	justify-items: center;
+	height: 10px;
+	width: 100%;
+	border: none;
+	border-radius: 5px;
+	background: #1b82b6;
+	color: #fff;
+	text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+}
+.btn .btn-secondary:hover{
+	background: #09b835;
+}
+.verification-code-boxes {
+  display: flex;
+  gap: 10px; /* Adjust gap between boxes as needed */
+}
+
+.code-box {
+  width: 20px; /* Explicitly set to 20px width */
+  height: 20px; /* Explicitly set to 20px height */
+  border: 1px solid #5b695e;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  background-color: transparent;
+}
+
+/*Responsive start for emailverificatio*/
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 90%;
+    background-size: cover;
+  }
+  
+  .container .title {
+    flex-direction: column; /* Stack elements vertically on smaller screens */
+    gap: 10px; /* Adjust gap between title elements */
+    margin: 0; 
+    padding: 10px;
+  }
+  
+  .container .title h6 {
+    text-align: center; 
+    font-size: 14px; 
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 10px;
+  }
+  
+  .container .title h1 {
+  	margin-top: 0px;
+  	margin-bottom: 0px;
+  }
+  .container .title .text-center a{
+  	color: #597305;
+  }
+  .container .form .user-details input {
+    width: 100%;
+  }
+  
+  .verification-code-boxes {
+    flex-wrap: wrap; /* Wrap the code boxes */
+    justify-content: center; /* Center align the code boxes */
+  }
+  
+  .code-box {
+    width: 30px; /* Adjust width of code box */
+    height: 30px; /* Adjust height of code box */
+    font-size: 16px; /* Adjust font size of code box */
+  }
+}
+
+/*Responsive end for emailverificatio*/

@@ -1,0 +1,324 @@
+body{
+			display: flex;
+			background-color: #faebfc;
+		}
+    .container {
+    	margin-left: 200px; 
+    	margin-right: 200px; 
+    	margin-top: 50px; 
+    	padding-top: 0px; 
+    	width: 750px; 
+    	height: 450px;
+	    background-image: url('../image/image21.jpg');
+	    background-size: 70% 100%; 
+	    background-position: right;
+	    background-repeat: no-repeat;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    border-radius: 40px;
+	    border: 4px solid black;
+    }
+    .row {
+    	color: black;
+    	margin-left: -350px;
+    }
+    .row a{
+    	color: black; 
+    	margin-left: -8px;
+    	margin-top: 0px;
+    	padding-top: 0px;
+    	padding-bottom: 30px!important;
+    	font-size: 24px;
+    	font-weight: bolder;
+    	font-family: Matura MT Script Capitals;
+    	text-decoration: none;
+    }
+    .row h1{
+    	color: black;
+    	margin-top: 100px; 
+    	margin-left: 120px;
+    }
+    .row h1 span{
+    	color: white;
+    }
+    #name, #contact, #email, #password, #confirm_password{
+    	height: 40px;
+    	width: 260px; 
+    	border-radius: 20px;
+    	border: none;
+    	box-shadow:  0 0 10px 3px rgba(0, 0, 0, 0.3);
+    }
+    .form-control{
+    	margin-left: 90px;
+    }
+    .pa{
+    	padding-left: 8px;
+    }
+    .form-control .button{
+    	height: 40px;
+    	width: 100px;
+    	padding: 6px;
+    	margin-left: 60px;
+    	border-radius: 20px;
+    	background-color: #6dd18d;
+    	font-weight: bolder;
+    	color: black;
+    }
+    .footer-form-controler h5{
+    	color: black;
+    	margin-left: 97px;
+    	padding: 0px;
+    }
+    .footer-form-controler h5 a{
+    	text-decoration: none;
+    	font-family: Arial;
+    	font-size: 14px;
+    	font-weight: 200;
+    	color: white;
+    	padding-left: 6px!important;
+    }
+    .footer-form-controler h5 a{
+    	white-space: pre !important;
+    	padding-left: 5px;
+    }
+    .container-fluid .form-data h6{
+    	margin-top: 10px;
+    	margin-left: 95px;
+    	font-size: 12px;
+    }
+    .container-fluid .form-data h6 a{
+    	text-decoration: none;
+    	font-family: Arial;
+    	font-weight: 400;
+    	font-size: 14px;
+    	padding-left: 8px;
+    	color: white;
+    }
+
+/*Design for Login Page End*/
+
+/*Design for Registration Page Start*/
+#form-reg{
+	margin-left: 200px; 
+    margin-right: 200px; 
+    margin-top: 50px; 
+    padding: 0px; 
+    width: 750px; 
+    height: 550px;
+	background-image: url('../image/image4.jpg');
+	background-size: 70% 100%; 
+	background-position: left;
+	background-repeat: no-repeat;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 40px;
+	border: 4px solid black;
+}
+#row1{
+	 color: black;
+	 margin-left: 350px;
+}
+#row1 .logo{
+	color: black; 
+	margin-left: 220px;
+	margin-top: 0px;
+	margin-bottom: 30px;
+	padding-left: 10px;font-size: 24px;
+	font-weight: bolder;
+	font-family: Matura MT Script Capitals;
+	text-decoration: none;
+}
+#row1 h1{
+	margin-top: 20px;
+	margin-left: 50px;
+}
+#row1 #row2{
+	margin-left: -40px;
+}
+.footer-form-controler .text a{
+	color: blue;
+	font-weight: 200;
+	padding-left: 5px;
+}
+/*Design for Registration Page End*/
+
+/*Design for Forgetpass Page start*/
+#form-fpass{
+	margin-left: 200px; 
+    margin-right: 200px; 
+    margin-top: 50px; 
+    padding: 0px; 
+    width: 750px; 
+    height: 350px;
+	background-image: url('../image/image41.jpg');
+	background-size: 70% 100%; 
+	background-position: right;
+	background-repeat: no-repeat;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 40px;
+	border: 4px solid black;
+}
+.title {
+    color: black;
+    margin-left: -350px;
+}
+.title a{
+    color: black; 
+    margin-left: -8px;
+    margin-top: 0px;
+    margin-bottom: 100px;
+    padding-bottom: 50px!important;
+    font-size: 24px;
+    font-weight: bolder;
+    font-family: Matura MT Script Capitals;
+    text-decoration: none;
+}
+.title h1{
+	margin-top: 55px!important;
+	margin-left: 110px;
+	padding-top: 0px!important;
+}
+.text-center .button{
+    	height: 40px;
+    	width: 100px;
+    	padding: 6px;
+    	margin-left: 60px;
+    	margin-bottom: 60px;
+    	border-radius: 20px;
+    	background-color: #6dd18d;
+    	font-weight: bolder;
+    	color: black;
+    }
+/*Design for Forgetpass Page End*/
+
+/*Responsive statrt for all pages*/
+/* Common styles for all pages */
+.container {
+    width: 90%; /* Adjust the width */
+    max-width: 750px; /* Set a maximum width */
+    margin: 50px auto; /* Center the container */
+}
+
+/* Responsive styles for the login page */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack elements vertically on smaller screens */
+        height: auto; /* Remove fixed height */
+        padding: 20px; /* Adjust padding */
+    }
+    .row{
+        margin-left: -220px; /* Remove left margin */
+        text-align: left; 
+    }
+    .footer-form-controler .login-footer{
+    	margin-left: -330px;
+    }
+    .form-control, .form-control {
+        width: 100%; /* Make inputs and button full width */
+        margin: 10px 0; /* Adjust margin */
+    }
+    .button{
+    	width: 20%;
+/*    	margin: 10px 0;*/
+    }
+    .logo1 {
+        position: absolute; /* Position the logo */
+        top: 90px; /* Align to top */
+        left: 40px; /* Align to left */
+    }
+}
+
+/* Responsive styles for the registration page */
+@media screen and (max-width: 768px) {
+    #form-reg {
+        max-width: 750px; /* Set a maximum width */
+        margin: 50px auto; /* Center the form */
+        padding: 20px; /* Adjust padding */
+    }
+    #row1 {
+        margin-left: 0; /* Remove left margin */
+        text-align: center; /* Center align text */
+    }
+}
+
+/* Responsive styles for the registration page */
+@media screen and (max-width: 768px) {
+    #form-reg {
+        max-width: 750px; /* Set a maximum width */
+        margin: 10px auto; /* Center the form */
+        padding: 20px; /* Adjust padding */
+        position: relative; /* Ensure relative positioning for absolute elements */
+    }
+    #row1 {
+        margin-left: 0px; /* Remove left margin */
+        text-align: center; /* Center align text */
+    }
+    #row1 h1{
+    	margin-left: 155px;
+    }
+    .logo {
+        position: absolute; /* Position the logo */
+        top: 10px; /* Adjust top position */
+        left: 100px; /* Adjust left position */
+    }
+    .footer-form-controler {
+        position: absolute; /* Position the footer */
+        bottom: 10px; /* Adjust bottom position */
+        left: 60%; /* Adjust left position */
+        transform: translateX(-50%); /* Center the footer horizontally */
+        width: calc(100% - 20px); /* Adjust width to fit within container */
+        text-align: center; /* Center align text */
+    }
+    .form-control {
+        margin-bottom: 0px;
+        margin-left: 100px;
+    }
+    .button{
+    	display: inline-block;
+    	margin-bottom: 30px;
+    }
+    .footer-form-controler h5 {
+        display: inline-block;  
+    }
+}
+/* Responsive styles for the forget password page */
+@media screen and (max-width: 768px) {
+    #form-fpass {
+        max-width: 750px; 
+        margin: 50px auto; 
+        padding: 20px; 
+        position: relative; 
+    }
+    #fpass {
+        margin-left: -255px; 
+        text-align: center; 
+    }
+    .title a {
+        display: block;
+        margin-bottom: 20px;
+    }
+    #text-form {
+        margin-top: 20px;
+        margin-left: 120px;
+    }
+    #text-data {
+        width: 100%; 
+        margin: 10px; 
+    }
+    #btn-submit {
+        width: 50%; /* Set width of button */
+        display: block; /* Display button as block for full width */
+        margin: 10px auto; /* Center the button */
+    }
+    .logo2{
+        position: absolute; /* Position the logo */
+        top: 15px; /* Adjust top position */
+        left: 25px; /* Adjust left position */
+    }
+}
+
+/*Responsive end for all pages*/

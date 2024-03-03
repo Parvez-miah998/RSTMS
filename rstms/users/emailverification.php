@@ -34,14 +34,16 @@ if (isset($_POST["verify_email"])) {
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>EmailVerification Page</title>
-	<link rel="stylesheet" type="text/css" href="../assets/css/emailverify.css">
+	<title>KING Restaurant</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/icon1.svg">
+	<link rel="stylesheet" type="text/css" href="../assets/css/emailverification.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
 <body>
 	<div class="container">
 		<div class="title">
-			<h5 class="text-center">Restaurent Management System</h5>
+			<h1 class="text-center"><span style="color: #57f745; font-family: Matura MT Script Capitals;">K</span><i class="fa-solid fa-crown" style="color: #faee6b;"></i><span style="color: #15e2ed;font-family: Algerian;">N</span><span style="color: #ed1548;font-family: Lucida Sans;">G</span></h1>
 			<h6 class="text-center">Alredy verified?<a href="login.php"> Login</a></h6>
 		</div>
 		<div class="form">

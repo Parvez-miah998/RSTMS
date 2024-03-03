@@ -67,22 +67,24 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Forgotpassword Page</title>
-    <link rel="stylesheet" type="text/css" href="../assets/css/userlogin.css">
+    <title>KING Restaurant</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/icon1.svg">
+    <link rel="stylesheet" type="text/css" href="../assets/css/rfl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container" id="form-fpass">
         <div class="title" id="fpass">
-            <a href="#">BIGTree</a><br>
-            <h1>Forgot<span> Password</span> </h1>
+            <a href="#" class="logo2"><span style="color: #57f745; font-family: Matura MT Script Capitals;">K</span><i class="fa-solid fa-crown" style="color: #faee6b;"></i><span style="color: #15e2ed;font-family: Algerian;">N</span><span style="color: #ed1548;font-family: Lucida Sans;">G</span></a><br>
+            <h1>Forgot Password</h1>
             <div class="container-fluid">
             <form action="" method="POST">
-                <div class="form-data">
-                    <div class="form-control">
-                        <input type="email" name="u_email" id="email" placeholder="   Enter Your Register Email" required>
+                <div class="form-data" id="text-form">
+                    <div class="form-control" id="text-data">
+                        <input type="email" class="pa" name="u_email" id="email" placeholder="   Enter Your Register Email" required>
                     </div><br>
-                    <div class="form-control text-center">
-                        <button type="submit" class="button" name="submit" value="submit">Submit</button>
+                    <div class="form-control text-center" id="text-data">
+                        <button type="submit" class="button" id="btn-submit" name="submit" value="submit">Submit</button>
                     </div>
                 </div>
             </form>

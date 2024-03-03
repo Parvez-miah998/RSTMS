@@ -81,13 +81,14 @@ if (isset($_POST['login'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>KING Restaurant</title>
     <link rel="icon" type="image/x-icon" href="../assets/icons/icon1.svg">
-	<link rel="stylesheet" type="text/css" href="../assets/css/userlogin.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/rfl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
 <body>
 	<div class="container">
 		<div class="row">
-			<a href="#">BIGTree</a><br>
+			<a href="#" class="logo1"><span style="color: #57f745; font-family: Matura MT Script Capitals;">K</span><i class="fa-solid fa-crown" style="color: #faee6b;"></i><span style="color: #15e2ed;font-family: Algerian;">N</span><span style="color: #ed1548;font-family: Lucida Sans;">G</span></a><br>
 			<h1>Login <span>Here!</span> </h1>
 			<?php if (isset($_SESSION['error'])): ?>
 			  <div class="error-message"><?php echo $_SESSION['error']; ?></div>
@@ -97,10 +98,10 @@ if (isset($_POST['login'])) {
 			<form action="" method="POST">
 			    <div class="form-data">
 			        <div class="form-control">
-                        <input type="email" name="u_email" id="email" class="text-white text-center mt-2 p-3" placeholder="   Enter Your Email" required>
+                        <input type="email" class="pa" name="u_email" id="email" class="text-white text-center mt-2 p-3" placeholder="   Enter Your Email" required>
                     </div><br>
 					<div class="form-control">
-						<input type="password" name="u_password" id="password" class="text-white text-center mt-2 p-3" placeholder="   Enter Password" required>
+						<input type="password" class="pa" name="u_password" id="password" class="text-white text-center mt-2 p-3" placeholder="   Enter Password" required>
 					</div><br>
 			        <div class="form-control">
 			            <button type="submit" class="button" name="login" value="login">Login</button>
@@ -115,7 +116,7 @@ if (isset($_POST['login'])) {
 			</form>
 		</div>
 		<div class="footer-form-controler">
-			<h5>Are you new here? <a href="registration.php">Sign Up</a></h5>
+			<h5 class="login-footer">Are you new here? <a href="registration.php">Sign Up</a></h5>
 		</div>
 	</div>
 
