@@ -216,6 +216,7 @@ body{
     }
     .footer-form-controler .login-footer{
     	margin-left: -330px;
+        margin-top: 0px;
     }
     .form-control, .form-control {
         width: 100%; /* Make inputs and button full width */

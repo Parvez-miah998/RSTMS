@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2024 at 09:10 PM
+-- Generation Time: Mar 15, 2024 at 09:47 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -32,7 +32,13 @@ CREATE TABLE `admin` (
   `a_name` text NOT NULL,
   `a_email` text NOT NULL,
   `a_contact` text NOT NULL,
+  `a_paddress` varchar(100) DEFAULT NULL,
+  `a_caddress` varchar(100) DEFAULT NULL,
+  `a_img` text DEFAULT NULL,
+  `a_nid` varchar(50) DEFAULT NULL,
   `a_password` text NOT NULL,
+  `verification_code` varchar(100) NOT NULL,
+  `email_verified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `joining_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -40,8 +46,8 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`a_id`, `a_name`, `a_email`, `a_contact`, `a_password`, `joining_date`) VALUES
-(1, 'Parvez Mosarof', 'admin@gmail.com', '01630411972', '$2y$10$gR9tim6URNG1pqWurgEsze9OZxtu/WRgs81bvA4YK8xmSZ73YUdTe', '0000-00-00');
+INSERT INTO `admin` (`a_id`, `a_name`, `a_email`, `a_contact`, `a_paddress`, `a_caddress`, `a_img`, `a_nid`, `a_password`, `verification_code`, `email_verified_at`, `joining_date`) VALUES
+(1, 'Parvez Mosarof', 'admin@gmail.com', '01630411972', NULL, NULL, NULL, NULL, '$2y$10$gR9tim6URNG1pqWurgEsze9OZxtu/WRgs81bvA4YK8xmSZ73YUdTe', '', '2024-03-15 19:37:58', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -98,7 +104,7 @@ INSERT INTO `tbl_catagory` (`c_id`, `c_name`, `c_title`, `c_image`, `c_active`, 
 (15, 'Snacks', 'Snacks', 'snacks.jpg', 'active', 'Display'),
 (17, 'Soft Starters', 'Starters new', 'image17.jpg', 'active', 'Display'),
 (18, 'Hot Drinks', 'Spicy Hot Drinks', 'spicy.jpg', 'Active', 'Display'),
-(19, 'Dessert', 'Sweet Pop', 'sweet.jpg', 'Unactive', 'Non Display');
+(19, 'Dessert', 'Sweet Pop', 'sweet.jpg', 'Unactive', 'Display');
 
 -- --------------------------------------------------------
 
@@ -173,7 +179,8 @@ INSERT INTO `tbl_food` (`f_id`, `f_title`, `f_desc`, `f_price`, `f_disctprice`, 
 (5, 'Chocolate venilla', 'Chocolate ice cream is made by blending in vanilla essence in along with the eggs (optional), cream, milk and sugar. The vanilla essence added gives the ice cream a very natural aroma and vanilla flavour.', '4.00', '3.25', '3.00', 'image15.jpg', 15, 'Snacks', 'Display', 'Active'),
 (6, 'Mojo', 'A soft drink is a drink that usually contains water, a sweetener, and a natural and/or artificial flavoring.', '3.50', '3.00', '4.15', 'imagemojo.jpg', 13, 'Soft Drinks', 'Display', 'Active'),
 (7, 'Hot Drinks', 'Hu said that moderate coffee intake—about 2–5 cups a day—is linked to a lower likelihood of type 2 diabetes, heart disease, liver and endometrial cancers, Parkinson\\\'s disease, and depression. It\\\'s even possible that people who drink coffee can reduce th', '4.00', '3.55', '2.25', 'coffe.jpg', 18, 'Hot Drinks', 'Display', 'Unactive'),
-(8, 'Snacks', 'A snack is a small portion of food eaten between meals. They may be simple, prepackaged items, raw fruits or vegetables or more complicated dishes but they are traditionally considered less than a full meal.', '5.25', '5.00', '1.25', 'snacks.jpg', 15, 'Snacks', 'Display', 'Active');
+(8, 'Snacks', 'A snack is a small portion of food eaten between meals. They may be simple, prepackaged items, raw fruits or vegetables or more complicated dishes but they are traditionally considered less than a full meal.', '5.25', '5.00', '1.25', 'snacks.jpg', 15, 'Snacks', 'Display', 'Active'),
+(9, 'Pomegranate drinks', 'Pamir Cola Group is the first company in Afghanistan that produces and distributes high-quality pomegranate drinks under the “Shafa” brand name across the country. This drink has been warmly welcomed by our customers across the country.', '5.50', '5.00', '1.15', 'Pamir_Cola.jpg', 14, 'Soft Drinks', 'Display', 'Active');
 
 -- --------------------------------------------------------
 
@@ -215,8 +222,7 @@ CREATE TABLE `tbl_order` (
 --
 
 INSERT INTO `tbl_order` (`o_id`, `order_id`, `f_title`, `f_disctprice`, `total_amount`, `o_quantity`, `f_vat`, `o_date`, `u_id`, `u_name`, `ta_id`, `t_name`) VALUES
-(105, '8PXC6IJA', 'Chocolate venilla', '3.25', '26.78', '8', '3.00', '2024-02-08', 12, 'Parvez Mosarof', NULL, NULL),
-(106, 'ZEIURFHT', 'Mojo', '3.00', '9.37', '3', '4.15', '2024-02-08', 12, 'Parvez Mosarof', NULL, NULL);
+(222, '8HGCSOJ5', 'Pomegranate drinks', '5.00', '40.46', '8', '1.15', '2024-02-20', 27, 'Rafsan', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -232,13 +238,26 @@ CREATE TABLE `tbl_payment` (
   `total_amount` decimal(10,2) NOT NULL,
   `o_quantity` varchar(255) NOT NULL,
   `f_vat` decimal(10,2) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
   `o_date` date NOT NULL,
-  `payment_status` varchar(100) NOT NULL,
+  `payment_status` varchar(100) DEFAULT NULL,
   `u_id` int(11) NOT NULL,
   `u_name` varchar(255) NOT NULL,
   `ta_id` int(11) NOT NULL,
   `t_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_payment`
+--
+
+INSERT INTO `tbl_payment` (`p_id`, `order_id`, `f_title`, `f_disctprice`, `total_amount`, `o_quantity`, `f_vat`, `amount`, `o_date`, `payment_status`, `u_id`, `u_name`, `ta_id`, `t_name`) VALUES
+(58, 'TLVHNC04', 'Snacks', '5.00', '10.13', '2', '1.25', '10.13', '2024-02-25', 'Payment Successful &#36; 10.13', 26, 'Parvez', 35, 'Table 3'),
+(59, '1CRHD94T', 'Hot Drinks', '3.55', '7.26', '2', '2.25', '7.26', '2024-02-25', NULL, 26, 'Parvez', 35, 'Table 3'),
+(60, 'DGL5FP1K', 'Snacks', '5.00', '5.06', '1', '1.25', '5.06', '2024-02-25', NULL, 26, 'Parvez', 35, 'Table 3'),
+(61, '1JMC30H8', 'Mojo', '3.00', '9.37', '3', '4.15', '9.37', '2024-02-25', NULL, 26, 'Parvez', 35, 'Table 3'),
+(62, 'YG0OKMCR', 'Snacks', '5.00', '15.19', '3', '1.25', '15.19', '2024-02-25', NULL, 26, 'Parvez', 35, 'Table 3'),
+(63, 'ECTXWPJB', 'Chocolate venilla', '3.25', '3.35', '1', '3.00', '3.35', '2024-02-25', 'Payment Successful &#36; 3.35', 26, 'Parvez', 35, 'Table 3');
 
 -- --------------------------------------------------------
 
@@ -261,9 +280,9 @@ CREATE TABLE `tbl_table` (
 --
 
 INSERT INTO `tbl_table` (`ta_id`, `t_name`, `t_seat`, `t_status`, `t_category`, `t_id`, `u_name`) VALUES
-(32, 'Table 1', 13, 'Enable', 'Booked', 51, 'Parvez Mosarof'),
-(34, 'Table 2', 4, 'Enable', 'Regular', NULL, NULL),
-(35, 'Table 3', 6, 'Enable', 'Regular', NULL, NULL);
+(32, 'Table 1', 13, 'Disable', 'Booked', 52, 'Parvez Mosarof'),
+(34, 'Table 2', 4, 'Disable', 'Regular', NULL, NULL),
+(35, 'Table 3', 6, 'Disable', 'Regular', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -290,8 +309,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`u_id`, `u_name`, `u_contact`, `u_email`, `u_occ`, `u_paddress`, `u_dob`, `u_img`, `u_password`, `verification_code`, `email_verified_at`) VALUES
-(12, 'Parvez Mosarof', '01630411972', 'parvezmosarof195@gmail.com', 'Software Engineer', 'Shibchar, Madaripur', '1998-10-07', '2213337.jpg', '$2y$10$YxXvAiI5zQ.L2GdHgmp12ueHtJBvSRh1X2LQRl7e39/sWuspvFigO', '169022', '2023-12-27 17:50:33'),
-(26, 'Parvez', '01630411972', 'example@gmail.com', '', '', '0000-00-00', '', '$2y$10$sgDv1VeLRl1h.4ABhdfNF.BC8J.b2LulJcwRnQWea/2dvCsKDQZjq', '125523', '2024-02-08 18:21:20');
+(12, 'Parvez Mosarof', '01630411972', 'parvezmosarof195@gmail.com', 'Software Engineer', 'Shibchar, Madaripur', '1998-10-07', '2213337.jpg', '$2y$10$8hWdnw0KYCfRPCL87yHAaepYlRTEtD1MSzZq/HWgPDPnufwl2y3mW', '169022', '2023-12-27 17:50:33'),
+(26, 'Parvez', '01630411972', 'example@gmail.com', '', '', '0000-00-00', '', '$2y$10$sgDv1VeLRl1h.4ABhdfNF.BC8J.b2LulJcwRnQWea/2dvCsKDQZjq', '125523', '2024-02-08 18:21:20'),
+(27, 'Rafsan', '01630411972', 'cas@gmail.com', '', '', '0000-00-00', '', '$2y$10$UwvrgUH/zvGCIpPoQgeO0.NF/gR5OXAF9h8oKdiLLJAtW7VgET.py', '346950', '2024-02-11 15:49:23');
 
 --
 -- Indexes for dumped tables
@@ -401,7 +421,7 @@ ALTER TABLE `tbl_feedback`
 -- AUTO_INCREMENT for table `tbl_food`
 --
 ALTER TABLE `tbl_food`
-  MODIFY `f_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `f_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_notification`
@@ -413,13 +433,13 @@ ALTER TABLE `tbl_notification`
 -- AUTO_INCREMENT for table `tbl_order`
 --
 ALTER TABLE `tbl_order`
-  MODIFY `o_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `o_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
 
 --
 -- AUTO_INCREMENT for table `tbl_payment`
 --
 ALTER TABLE `tbl_payment`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `tbl_table`
@@ -431,7 +451,7 @@ ALTER TABLE `tbl_table`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

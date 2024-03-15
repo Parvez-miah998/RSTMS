@@ -33,19 +33,22 @@
 						<a href="bookedtable.php"><i class="fa-solid fa-couch"></i></a>
 					</div>
 					<div class="bar">
-						<a href="#"><i class="fa-solid fa-users"></i> </a>
+						<a href="userdetails.php"><i class="fa-solid fa-users"></i> </a>
 					</div>
 					<div class="bar">
-						<a href="#"><i class="fa-solid fa-credit-card"></i> </a>
+						<a href="payment-status.php"><i class="fa-solid fa-credit-card"></i> </a>
 					</div>
 					<div class="bar">
-						<a href="#"><i class="fa-solid fa-comments-dollar"></i></a>
+						<a href="sales-report.php"><i class="fa-solid fa-file-word"></i> </a>
 					</div>
 					<div class="bar">
-						<a href="#"><i class="fa-solid fa-comment"></i></i></a>
+						<a href="contactus-details.php"><i class="fa-solid fa-comments-dollar"></i></a>
 					</div>
 					<div class="bar">
-						<a href="#"><i class="fa-solid fa-gear"></i></a>
+						<a href="user-feedback.php"><i class="fa-solid fa-comment"></i></i></a>
+					</div>
+					<div class="bar">
+						<a href="admin-profile.php"><i class="fa-solid fa-gear"></i></a>
 					</div>
 					<div class="bar">
 						<a href="changepass.php"><i class="fa-solid fa-key"></i>  </a>
