@@ -19,6 +19,7 @@ include ('dbconnection.php');
     <!--script for calender start-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     
+    
     <script type="text/javascript">
     	if (window.history.replaceState) {
     		window.history.replaceState(null, null, window.location.href);

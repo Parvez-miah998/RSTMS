@@ -4,12 +4,29 @@
 			<div class="logo">
 				<a href="dashboard.php"><span style="color: #57f745; font-family: Matura MT Script Capitals;">K</span><i class="fa-solid fa-crown"></i><span style="color: #15e2ed;font-family: Algerian;">N</span><span style="color: #ed1548;font-family: Lucida Sans;">G</span></a>		
 			</div>
-			<div class="admin-prof">
-				<img src="../assets/image/image15.jpg" alt="admin profile">
-				<div class="detils">
-					<span class="admin-name">John Doe</span><br>
-                	<span class="admin-email">john@example.com</span>
-				</div>
+			<div class="admin-prof"style="display: flex;align-items:center;">
+				<?php
+				if (isset($_SESSION['admin_email'])) {
+					$a_email = $_SESSION['admin_email'];
+					$sql_admin = $conn->prepare("SELECT a_name, a_email, a_img FROM admin WHERE a_email = ?");
+					$sql_admin -> bind_param("s", $a_email);
+					$sql_admin -> execute();
+					$result_admin = $sql_admin->get_result();
+					if ($result_admin && $result_admin->num_rows>0) {
+						$row = $result_admin->fetch_assoc()
+				?>
+						<div class="active-indicator"></div>
+						<img src="<?php echo $row['a_img']; ?>" alt="admin profile">
+						<div class="detils">
+							<span class="admin-name"><?php echo $row['a_name']; ?></span><br>
+			                <span class="admin-email"><?php echo $row['a_email']; ?></span>
+						</div>
+				
+				<?php
+					}
+				}
+				?>
+				
 			</div>
 		</div>
 	</nav>
@@ -64,3 +81,26 @@
 				</div>
 			</div>
 <!-- side bar end -->
+<!-- Style for Profile active green dot start -->
+<style type="text/css">
+	.active-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+    margin-right: -5px;
+    margin-top: -20px;
+    animation: pulse 0.5s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+</style>
+<!-- Style for Profile active green dot end -->

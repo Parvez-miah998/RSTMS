@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2024 at 09:47 PM
+-- Generation Time: Mar 16, 2024 at 08:16 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -36,18 +36,19 @@ CREATE TABLE `admin` (
   `a_caddress` varchar(100) DEFAULT NULL,
   `a_img` text DEFAULT NULL,
   `a_nid` varchar(50) DEFAULT NULL,
+  `a_dob` date DEFAULT NULL,
   `a_password` text NOT NULL,
   `verification_code` varchar(100) NOT NULL,
-  `email_verified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `joining_date` date NOT NULL
+  `email_verified_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `joining_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`a_id`, `a_name`, `a_email`, `a_contact`, `a_paddress`, `a_caddress`, `a_img`, `a_nid`, `a_password`, `verification_code`, `email_verified_at`, `joining_date`) VALUES
-(1, 'Parvez Mosarof', 'admin@gmail.com', '01630411972', NULL, NULL, NULL, NULL, '$2y$10$gR9tim6URNG1pqWurgEsze9OZxtu/WRgs81bvA4YK8xmSZ73YUdTe', '', '2024-03-15 19:37:58', '0000-00-00');
+INSERT INTO `admin` (`a_id`, `a_name`, `a_email`, `a_contact`, `a_paddress`, `a_caddress`, `a_img`, `a_nid`, `a_dob`, `a_password`, `verification_code`, `email_verified_at`, `joining_date`) VALUES
+(1, 'Parvez Mosarof', 'admin@gmail.com', '01630411972', 'Shibchar, Madaripur', 'Sector 10, Uttara Dhaka 1230', '../assets/admin_image/Mask-Group-84448@2x-300x342.jpg', '8542135489', '1998-10-07', '$2y$10$gR9tim6URNG1pqWurgEsze9OZxtu/WRgs81bvA4YK8xmSZ73YUdTe', '', '2024-03-16 18:06:48', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
