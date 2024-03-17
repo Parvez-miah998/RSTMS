@@ -20,37 +20,42 @@
     }
 
     else{
-      $sql_admin = "SELECT a_id,a_password FROM admin WHERE a_email = ?";
-      $stmt_admin = mysqli_prepare($conn, $sql_admin);
-      mysqli_stmt_bind_param($stmt_admin, "s", $email);
-      mysqli_stmt_execute($stmt_admin);
-      mysqli_stmt_store_result($stmt_admin);
-
-      if (mysqli_stmt_num_rows($stmt_admin)>0) {
-        mysqli_stmt_bind_result($stmt_admin, $admin_id, $stored_pass);
-        mysqli_stmt_fetch($stmt_admin);
-
-        if (password_verify($c_pass, $stored_pass) || ($c_pass === $stored_pass)) {
-          $hash_new_password = password_hash($n_pass, PASSWORD_DEFAULT);
-          $sql_upass = "UPDATE admin SET a_password = ? WHERE a_id = ?";
-          $stmt_upass = mysqli_prepare($conn, $sql_upass);
-          mysqli_stmt_bind_param($stmt_upass, "si", $hash_new_password, $admin_id);
-          mysqli_stmt_execute($stmt_upass);
-
-          $message = "Password Update Successfully!";
-          
+      if (!preg_match("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/", $n_pass)) {
+          $message = '<div style="color: red;">Password must be at least 6 characters long and contain at least one letter and one digit.</div>';
         }
         else{
-          $message = "Invalid Current Password!";
-        }
-      }
-      else{
-        $message = "Email Does not Found!";
-      }
-      mysqli_stmt_close($stmt_admin);
-      mysqli_close($conn);
-    }
+        $sql_admin = "SELECT a_id,a_password FROM admin WHERE a_email = ?";
+        $stmt_admin = mysqli_prepare($conn, $sql_admin);
+        mysqli_stmt_bind_param($stmt_admin, "s", $email);
+        mysqli_stmt_execute($stmt_admin);
+        mysqli_stmt_store_result($stmt_admin);
 
+        if (mysqli_stmt_num_rows($stmt_admin)>0) {
+          mysqli_stmt_bind_result($stmt_admin, $admin_id, $stored_pass);
+          mysqli_stmt_fetch($stmt_admin);
+
+          if (password_verify($c_pass, $stored_pass) || ($c_pass === $stored_pass)) {
+            $hash_new_password = password_hash($n_pass, PASSWORD_DEFAULT);
+            $sql_upass = "UPDATE admin SET a_password = ? WHERE a_id = ?";
+            $stmt_upass = mysqli_prepare($conn, $sql_upass);
+            mysqli_stmt_bind_param($stmt_upass, "si", $hash_new_password, $admin_id);
+            mysqli_stmt_execute($stmt_upass);
+
+            $message = "Password Update Successfully!";
+            
+          }
+          else{
+            $message = "Invalid Current Password!";
+          }
+        }
+        else{
+          $message = "Email Does not Found!";
+        }
+        mysqli_stmt_close($stmt_admin);
+        
+      }
+    }
+  mysqli_close($conn);
   }
 ?>
 

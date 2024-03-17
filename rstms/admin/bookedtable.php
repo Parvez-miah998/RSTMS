@@ -10,7 +10,7 @@
 	<!--Booked table area start-->
 	<div class="container">
 		<div class="header">
-			<h2>Customer's Booked Table</h2>
+			<h2>Customer's Booked Table Request</h2>
 		</div>
         <?php if (!empty($message)) : ?>
             <p style="color: green;"><?php echo $message;?></p>
@@ -143,6 +143,9 @@
         .header {
             text-align: center;
             margin-bottom: 20px;
+            background-color: #97fcf7;
+            padding: 5px;
+            border-radius: 10px 10px 0 0;
         }
 
         .table {

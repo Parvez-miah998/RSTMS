@@ -106,6 +106,9 @@
         .header {
             text-align: center;
             margin-bottom: 20px;
+            background-color: #97fcf7;
+            padding: 5px;
+            border-radius: 10px 10px 0 0;
         }
 
         .ctable {

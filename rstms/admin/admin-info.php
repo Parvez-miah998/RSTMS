@@ -1,5 +1,4 @@
 <?php
-    include('includes/dbconnection.php');
     include('includes/header.php');
     include('includes/sidebar.php');
     if (!isset($_SESSION['admin_email'])) {
@@ -11,89 +10,87 @@
 
 	<div class="container">
 		<div class="header">
-			<h2>Food Menu</h2>
+		<h1>Admin Details</h1>
 		</div>
-        <?php if(!empty($message)) : ?>
-            <p style="color: green;"> <?php echo $message; ?> </p>
+        <?php if (!empty($message)) : ?>
+            <p style="color: green;"> <?php echo $message;?></p>
         <?php endif; ?>
-        <div class="search-btn">
-            <form action="" method="GET" target="_blank">
-                <input type="search" id="searchInput" name="search" placeholder="Find Category">
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </form>
-        </div>
 		<div class="table">
 			<table class="ctable">
 				<thead>
 					<tr>
 						<th>SL</th>
-						<th>Title</th>
-						<th>Description</th>
-						<th>Price</th>
-						<th>Discount Price</th>
-                        <th>VAT</th>
+						<th>Name</th>
+						<th>Contact</th>
+						<th>Email</th>
+						<th>Current Address</th>
+						<th>Permanent Address</th>
+						<th>Date of Birth</th>
+						<th>NID or Passport</th>
 						<th>Image</th>
-						<th>Category Name</th>
-						<th>Status</th>
-						<th>Featured</th>
+						<th>Super Admin</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
-                    <?php 
-                    $sql = "SELECT * FROM tbl_food";
+                    <?php
+                    $sql = "SELECT * FROM admin";
                     $stmt = $conn->prepare($sql);
-                    $stmt->execute();
+                    $stmt -> execute();
                     $result = $stmt->get_result();
 
                     if ($result && $result->num_rows > 0) {
                         $sl = 1;
                         while ($row = $result->fetch_assoc()) {
-                            echo '<tr>';
-                            echo "<td>{$sl}</td>";
-                            echo '<td>'.$row["f_title"].'</td>';
-                            echo '<td>'.$row["f_desc"].'</td>';
-                            echo '<td>&#36;'.$row["f_price"].'</td>';
-                            echo '<td>&#36;'.$row["f_disctprice"].'</td>';
-                            echo '<td>'.$row["f_vat"].'&#37;</td>';
-                            echo "<td><img class='form-image' src='../assets/image/{$row["f_image"]}' alt='food-image'></td>";
-                            echo '<td>'.$row['c_name'].'</td>';
-                            echo '<td>'.$row['f_active'].'</td>';
-                            echo '<td>'.$row['f_featured'].'</td>';
-                            echo '<td>';
-                            echo "<form action='editfoodmenu.php' method='GET' style='display:inline-block;'>";
-                            echo '<input type="hidden" name="id" value='.$row["f_id"].'>';
+                            echo "<tr>";
+                            echo "<td>{$sl}</td>";    
+                            echo "<td>".$row['a_name']."</td>";
+                            echo "<td>".$row['a_contact']."</td>";
+                            echo "<td>".$row['a_email']."</td>";
+                            echo "<td>".$row['a_caddress']."</td>";
+                            echo "<td>".$row['a_paddress']."</td>";
+                            echo "<td>".$row['a_dob']."</td>";
+                            echo "<td>".$row['a_nid']."</td>";
+                            echo "<td>
+                                    <img class='form-image' src='". $row['a_img']."' alt='adminImage'>
+                                  </td>";
+                            echo "<td>".$row['s_admin']."</td>";
+                            echo "<td>";
+                            echo "<form action='forgotpass.php' method='GET' style='display:inline-block;'>";
+                            echo '<input type="hidden" name="id" value='.$row["a_id"].'>';
                             echo "<button type='submit' class='icon-edit'>";
-                            echo "<i class='fa-solid fa-pen-to-square'></i>";
+                            echo "<i class='fa-solid fa-key fas_key'></i>";
                             echo "</button>";
                             echo "</form>";
-                            echo "<form action='' method='POST' style='display: inline-block;'>";
-                            echo '<input type="hidden" name="f_id" value='.$row["f_id"].'>';
-                            echo "<button name='delete_btn' class='del-btn'>";
-                            echo "<i class='fa-solid fa-trash'></i>";
+                            echo "<form action='' method='POST' style='display:inline-block;'>";
+                            echo '<input type="hidden" name="a_id" value='.$row['a_id'].'>';
+                            echo "<button class='del-btn' name='delete_btn'>";
+                            echo "<i class='fa-solid fa-trash-can'></i>";
                             echo "</button>";
                             echo "</form>";
-                            echo '</td>';
-                            echo '</tr>';
+                            echo "</td>";
+                            echo "</tr>";
                             $sl++;
                         }
                     }
+                    else{
+                        echo "<p style='text-align: center;color: red;'>No Catagory Found!</p>";
+                    }
                     ?>
-
+					
 				</tbody>
 			</table>
 		</div>
 	</div>
-
 	<div class="icon">
-		<a href="addfoodmenu.php"><i class="fa-solid fa-square-plus"></i></a>
+		<a href="admin-add.php"><i class="fa-solid fa-square-plus"></i></a>
 	</div>
     <?php
-    if (isset($_POST['delete_btn']) && isset($_POST['f_id'])) {
-        $f_id = $_POST['f_id'];
-        $sql = "DELETE FROM tbl_food WHERE f_id = ?";
+    if (isset($_POST['delete_btn']) && isset($_POST['a_id'])) {
+        $a_id = $_POST['a_id'];
+        $sql = "DELETE FROM admin WHERE a_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $f_id);
+        $stmt->bind_param("i", $a_id);
         if ($stmt->execute()) {
             echo "<script>window.location.reload();</script>";
         }
@@ -113,9 +110,8 @@
         }
 
         .container {
-            max-width: 89%;
+            max-width: 88%;
             margin: 50px auto;
-/*            background-color: #fff;*/
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             padding: 20px;
@@ -127,7 +123,7 @@
             background-color: #d7f7f7;
             color: #070808;
             text-align: center;
-            padding: 10px;
+            padding: 5px;
             margin-bottom: 20px;
             border-radius: 5px;
         }
@@ -154,19 +150,17 @@
         }
 
         .ctable button {
-        	display: inline-block;
             background-color: #3498db;
             color: #fff;
             border: none;
-            margin-top: 2px;
-            padding: 5px 9px;
+            padding: 5px 10px;
             cursor: pointer;
-            border-radius: 5px;
         }
 
         .ctable button:hover {
             background-color: #2980b9;
         }
+
         .add-link {
             display: block;
             text-align: center;
@@ -182,8 +176,8 @@
             background-color: #2980b9;
         }
         .form-image{
-        	height: 30px;
-        	width: 30px;
+        	height: 35px;
+        	width: 35px;
         	object-fit: cover;
         }
         .icon-edit{
@@ -204,7 +198,7 @@
         }
         .icon {
             position: fixed;
-            bottom: 60px;
+            bottom: 50px;
             right: 40px;
             width: 50px;
             height: 50px;
@@ -227,10 +221,8 @@
         .icon a .fa-square-plus:hover{
             color: #06d6be;
         }
-        .search-btn{
-        	margin-bottom: 20px;
-        	margin-left: 82%;
-
+        .fas_key{
+            font-size: 12px;
         }
     </style>
 	<!--Style for category page end-->

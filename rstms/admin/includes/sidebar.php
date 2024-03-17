@@ -8,7 +8,7 @@
 				<?php
 				if (isset($_SESSION['admin_email'])) {
 					$a_email = $_SESSION['admin_email'];
-					$sql_admin = $conn->prepare("SELECT a_name, a_email, a_img FROM admin WHERE a_email = ?");
+					$sql_admin = $conn->prepare("SELECT a_name, a_email, a_img, s_admin FROM admin WHERE a_email = ?");
 					$sql_admin -> bind_param("s", $a_email);
 					$sql_admin -> execute();
 					$result_admin = $sql_admin->get_result();
@@ -23,6 +23,7 @@
 						</div>
 				
 				<?php
+						
 					}
 				}
 				?>
@@ -62,8 +63,19 @@
 						<a href="contactus-details.php"><i class="fa-solid fa-comments-dollar"></i></a>
 					</div>
 					<div class="bar">
-						<a href="user-feedback.php"><i class="fa-solid fa-comment"></i></i></a>
+						<a href="user-feedback.php"><i class="fa-solid fa-comment"></i></a>
 					</div>
+					<div class="bar">
+						<a href="account.php"><i class="fa-solid fa-keyboard"></i></a>
+					</div>
+					<?php
+					if ($row['s_admin'] == 'Yes') {
+						echo '<div class="bar">
+							<a href="admin-info.php"><i class="fa-solid fa-user-tie"></i></a>
+						</div>';
+					}
+					
+					?>
 					<div class="bar">
 						<a href="admin-profile.php"><i class="fa-solid fa-gear"></i></a>
 					</div>

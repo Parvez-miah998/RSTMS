@@ -101,11 +101,11 @@
             </div>
             <div class="form-data">
                 <label>Your NID or Passport No</label>
-                <input type="text" name="a_nid" id="a_nid" value="<?php if(isset($anid)) {echo $row['a_nid'];} ?>" required>
+                <input type="text" name="a_nid" id="a_nid" value="<?php if(isset($anid)) {echo $row['a_nid'];} ?>" readonly>
             </div>
             <div class="form-data">
                 <label>Date of Birth</label>
-                    <input type="text" name="a_dob" id="a_dob" class="custom-date-picker" value="<?php if(isset($adob)) {echo $row['a_dob'];} ?>" required>
+                    <input type="text" name="a_dob" id="a_dob" class="custom-date-picker" value="<?php if(isset($adob)) {echo $row['a_dob'];} ?>" readonly>
             </div>
             <div class="form-image">
                 <label>Choose Your File:</label>

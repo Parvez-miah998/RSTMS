@@ -16,7 +16,7 @@
             <p style="color: green;"> <?php echo $message;?></p>
         <?php endif; ?>
 		<div class="search-btn">
-			<form>
+			<form action="" method="GET" target="_blank">
 				<input type="search" id="searchInput" name="search" placeholder="Find Category">
 				<button type="submit"><i class="fas fa-search"></i></button>
 			</form>
