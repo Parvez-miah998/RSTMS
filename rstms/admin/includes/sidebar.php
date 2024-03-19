@@ -6,6 +6,7 @@
 			</div>
 			<div class="admin-prof"style="display: flex;align-items:center;">
 				<?php
+				$row = null;
 				if (isset($_SESSION['admin_email'])) {
 					$a_email = $_SESSION['admin_email'];
 					$sql_admin = $conn->prepare("SELECT a_name, a_email, a_img, s_admin FROM admin WHERE a_email = ?");
@@ -69,12 +70,13 @@
 						<a href="account.php"><i class="fa-solid fa-keyboard"></i></a>
 					</div>
 					<?php
-					if ($row['s_admin'] == 'Yes') {
-						echo '<div class="bar">
-							<a href="admin-info.php"><i class="fa-solid fa-user-tie"></i></a>
-						</div>';
+					if (!is_null($row)) {
+						if ($row['s_admin'] == 'Yes') {
+							echo '<div class="bar">
+								<a href="admin-info.php"><i class="fa-solid fa-user-tie"></i></a>
+							</div>';
+						}
 					}
-					
 					?>
 					<div class="bar">
 						<a href="admin-profile.php"><i class="fa-solid fa-gear"></i></a>

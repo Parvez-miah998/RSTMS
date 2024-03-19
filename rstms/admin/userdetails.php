@@ -26,14 +26,22 @@
              </thead>
              <tbody>
                 <?php
-                $sql = $conn->prepare("SELECT * FROM users");
+                $rowsPerPage = 25;
+                if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+                    $currentPage = $_GET['page'];
+                }
+                else{
+                    $currentPage = 1;
+                }
+                $offset = ($currentPage - 1) * $rowsPerPage;
+                $sql = $conn->prepare("SELECT * FROM users LIMIT $rowsPerPage OFFSET $offset");
                 $sql -> execute();
                 $result = $sql->get_result();
                 if ($result && $result->num_rows>0) {
-                    $sl = 1;
+                    $starting_sl = ($currentPage - 1) * $rowsPerPage + 1;
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
-                        echo "<td>{$sl}</td>";
+                        echo "<td>{$starting_sl}</td>";
                         echo "<td>".$row['u_name']."</td>";
                         echo "<td>".$row['u_email']."</td>";
                         echo "<td>".$row['u_contact']."</td>";
@@ -43,12 +51,29 @@
                         echo "<td><img class='user-img' src='../assets/user_images/{$row['u_img']}' alt='User_Image'></td>";
                         echo "</tr>";
 
-                        $sl++;
+                        $starting_sl++;
                     }
                 }
+                $sqlCount = "SELECT COUNT(*) AS total FROM users";
+                $resultCount = $conn->query($sqlCount);
+                $rowCount = $resultCount->fetch_assoc()['total'];
+                $totalPages = ceil($rowCount/$rowsPerPage);
                 ?>
              </tbody>
          </table>
+         <div class="pagination" style="margin-bottom: 15px;">
+            <?php if($totalPages>1) : ?>
+                <ul>
+                    <li> <a href="?page=1">&laquo;</a> </li>
+                    <?php for ($page=1; $page <= $totalPages ; $page++) : ?>
+                        <li <?php if($page == $currentPage) echo "class='active'"; ?>>
+                            <a href="?page=<?php echo $page; ?>"><?php echo $page; ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    <li> <a href="?page=<?php echo $totalPages; ?>">&raquo;</a> </li>
+                </ul>
+            <?php endif;?>
+         </div>
      </div>  
     </div>
 
@@ -97,6 +122,39 @@
         max-width: 50px;
         border-radius: 50%;
     }
+    .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pagination ul li {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .pagination ul li a {
+            display: block;
+            padding: 5px 10px;
+            text-decoration: none;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            color: #333;
+        }
+
+        .pagination ul li.active a {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .pagination ul li a:hover {
+            background-color: #f0f0f0;
+        }
 </style>
 
 <?php

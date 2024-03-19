@@ -11,14 +11,17 @@ include ('dbconnection.php');
     <link rel="icon" type="image/x-icon" href="../assets/icons/gauge-high-solid.svg">
     <link rel="stylesheet" type="text/css" href="../assets/icons/icon2.svg">
     <link rel="stylesheet" type="text/css" href="../assets/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!--This link is responsible for show the icon on mozilaFireFox-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <!--script for calender start-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    
+    <!--script for pie chart-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script type="text/javascript">
     	if (window.history.replaceState) {

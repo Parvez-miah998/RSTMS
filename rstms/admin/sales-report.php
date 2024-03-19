@@ -8,7 +8,7 @@
 ?>
 	<div class="container">
      <div class="header">
-         <h3>Sales Report</h3>
+         <h3>Sales & Cost Report</h3>
      </div> 
      <div class="sales-form">
          <form action="" method="GET">
@@ -21,7 +21,8 @@
                  <input type="date" name="search2" id="search2" class="custom-date-picker" placeholder="yyyy-mm-dd">
              </div>
              <div class="sales-btn">
-                 <button type="submit" name="sales-search">Search</button>
+                 <button type="submit" name="sales-search">Sales Report</button>
+                 <button type="submit" name="cost-search">Cost Report</button>
              </div>
          </form>
      </div>
@@ -39,7 +40,7 @@
             if ($result && mysqli_num_rows($result)>0) {
                 echo '<div class="table">';
                 echo '<div class="bottom-header">';
-                echo '<h3>Payment Details</h3>';
+                echo '<h3>Sales Details</h3>';
                 echo '</div>';
                 echo '<table class="stable">';
                 echo '<thead>';
@@ -80,6 +81,65 @@
             }
             else {
                 echo "<span style='margin-left:35%;background-color:#30f073;padding:4px;border-radius:5px;font-family: Bahnschrift Light;font-weight:500;'>No payment details found for the provided date range.</span>";
+            }
+        }
+    }
+
+    if (isset($_GET['cost-search'])) {
+        if (empty($_GET['search1']) || empty($_GET['search2'])) {
+            echo "<span style='margin-left:35%;background-color:#fa0707;padding:4px;border-radius:5px;font-family: Bahnschrift Light;font-weight:500;'>Please select the date range first.</span>";
+        }
+        else{
+            $from_date = $_GET['search1'];
+            $to_date = $_GET['search2'];
+            $sqlTotalcost = $conn->prepare("SELECT SUM(ac_amount) AS total_cost FROM account WHERE DATE(date) BETWEEN '$from_date' AND '$to_date'");
+            $sqlTotalcost -> execute();
+            $resultTotalcost = $sqlTotalcost->get_result();
+            $rowTotalcost = $resultTotalcost->fetch_assoc();
+            $total_cost = $rowTotalcost['total_cost'];
+            
+
+            $sql_cost = $conn->prepare("SELECT * FROM account WHERE date BETWEEN '$from_date' AND '$to_date'");
+            $sql_cost -> execute();
+            $result_cost = $sql_cost->get_result();
+            if ($result_cost && $result_cost->num_rows>0) {
+                echo '<div class="table">';
+                echo '<div class="bottom-header">';
+                echo '<h3>Cost Details</h3>';
+                echo '</div>';
+                if ($total_cost !== null) {
+                    echo '<div>';
+                    echo "<p style='background-color: #56f595;padding: 5px;border-radius:4px;font-weight: 700;'>Total Cost: &dollar; $total_cost</p>";
+                    echo '</div>';
+                }
+                else{
+                    echo "<span style='margin-left:35%;background-color:#30f073;padding:4px;border-radius:5px;font-family: Bahnschrift Light;font-weight:500;'>No cost details found for the provided date range.</span>";
+                }
+                echo '<table class="stable">';
+                echo '<thead>';
+                echo '<tr>';
+                echo "<th>Description</th>
+                        <th>Amount</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>";
+                echo "<tbody>";
+                while ($row_cost = $result_cost->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $row_cost['ac_desc'] . "</td>";
+                    echo "<td>&dollar; " . $row_cost['ac_amount'] . "</td>";
+                    echo "<td>" . $row_cost['a_email'] . "</td>";
+                    echo "<td>" . $row_cost['date'] . "</td>";
+                    echo "</tr>";
+                }
+                echo "</tbody>";
+                echo "</table>";
+                echo "</div>";
+                echo "</div>";
+            }
+            else{
+                echo "<span style='margin-left:35%;background-color:#30f073;padding:4px;border-radius:5px;font-family: Bahnschrift Light;font-weight:500;'>No cost details found for the provided date range.</span>";
             }
         }
     }
@@ -150,6 +210,7 @@
     outline: none;
     transition: background-color 0.3s ease;
     margin-left: 80px;
+    margin-top: 10px;
 }
 
 .sales-btn button:hover {
