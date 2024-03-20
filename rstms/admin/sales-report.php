@@ -34,6 +34,11 @@
         else{
             $from_date = $_GET['search1'];
             $to_date = $_GET['search2'];
+            $sql_sale = $conn->prepare("SELECT SUM(amount) AS total_sale FROM tbl_payment WHERE DATE(o_date) BETWEEN '$from_date' AND '$to_date'");
+            $sql_sale -> execute();
+            $result_sale = $sql_sale->get_result();
+            $total_sale = $result_sale->fetch_assoc()['total_sale'];
+
 
             $sql = "SELECT * FROM tbl_payment WHERE o_date BETWEEN '$from_date' AND '$to_date'";
             $result = mysqli_query($conn, $sql);
@@ -42,6 +47,17 @@
                 echo '<div class="bottom-header">';
                 echo '<h3>Sales Details</h3>';
                 echo '</div>';
+                if ($total_sale !== null) {
+                    $_SESSION['from_date'] = $from_date;
+                    $_SESSION['to_date'] = $to_date;
+                    $_SESSION['total_sale'] = $total_sale;
+                    echo '<div>';
+                    echo "<p style='background-color: #56f595;padding: 5px;border-radius:4px;font-weight: 700;'>Total Sale: &dollar; $total_sale</p>";
+                    echo '</div>';
+                }
+                else{
+                    echo "<span style='margin-left:35%;background-color:#30f073;padding:4px;border-radius:5px;font-family: Bahnschrift Light;font-weight:500;'>No cost details found for the provided date range.</span>";
+                }
                 echo '<table class="stable">';
                 echo '<thead>';
                 echo '<tr>';
@@ -50,8 +66,8 @@
                         <th>Food Name</th>
                         <th>Unit Price</th>
                         <th>Quantity</th>
+                        <th>VAT &#37;</th>
                         <th>Total Unit Price</th>
-                        <th>VAT</th>
                         <th>Total Amount</th>
                         <th>Order Date</th>
                         <th>Payment Status</th>
@@ -64,19 +80,34 @@
                     echo "<td>".$row['order_id']."</td>";
                     echo "<td>".$row['u_name']."</td>";
                     echo "<td>".$row['f_title']."</td>";
-                    echo "<td>".$row['f_disctprice']."</td>";
+                    echo "<td>&#36; ".$row['f_disctprice']."</td>";
                     echo "<td>".$row['o_quantity']."</td>";
-                    echo "<td>".$row['total_amount']."</td>";
                     echo "<td>".$row['f_vat']."</td>";
-                    echo "<td>".$row['amount']."</td>";
+                    echo "<td>&#36; ".$row['total_amount']."</td>";
+                    echo "<td>&#36; ".$row['amount']."</td>";
                     echo "<td>".$row['o_date']."</td>";
-                    echo "<td>".$row['payment_status']."</td>";
+                    echo "<td>";
+                    if (empty($row['payment_status']) || is_null($row['payment_status'])) {
+                        echo "<span style='color:red;'>Customer Does not Payment Yet!</span>";
+                    }
+                    else{
+                        echo $row['payment_status'];
+                    }
+                    echo "</td>";
                     echo "<td>".$row['t_name']."</td>";
                     echo "</tr>"; 
                 }
                 echo "</tbody>";
                 echo "</table>";
                 echo "</div>";
+                $_SESSION['from_date'];
+                $_SESSION['to_date'];
+                $_SESSION['total_sale'];
+                echo '<div class="pdf-btn">
+                        <form action="pdf.php" method="post" target="_blank">
+                            <button type="submit" name="sale_pdf_btn"><i class="fa-solid fa-print"></i></button> 
+                        </form>
+                    </div>';
                 echo "</div>";
             }
             else {
@@ -136,6 +167,15 @@
                 echo "</tbody>";
                 echo "</table>";
                 echo "</div>";
+                // Set session variables before redirecting to pdf.php
+                $_SESSION['from_date'] = $from_date;
+                $_SESSION['to_date'] = $to_date;
+                $_SESSION['total_cost'] = $total_cost;
+                echo '<div class="pdf-btn">
+                        <form action="pdf.php" method="post" target="_blank">
+                            <button type="submit" name="cost_pdf_btn"><i class="fa-solid fa-print"></i></button> 
+                        </form>
+                    </div>';
                 echo "</div>";
             }
             else{
@@ -254,6 +294,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-size: 18px;
   cursor: pointer;
 }
+.pdf-btn button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.pdf-btn button:hover {
+    background-color: #0af2ac;
+}
+
+.pdf-btn {
+    text-align: center;
+}
+
+.fa-print {
+    font-size: 24px;
+}
+
 /* Styling the calendar end */
 </style>
 

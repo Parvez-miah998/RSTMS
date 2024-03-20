@@ -11,20 +11,20 @@
 	<div class="content">
         <div class="total-order">
             <div class="order-head">
-                <h4>Total User</h4>
+                <h4>Total Order</h4>
             </div>
             <div class="order-body">
                 <?php
-                $sql_u = $conn->prepare("SELECT COUNT(*) AS total_u FROM users");
-                $sql_u -> execute();
-                $result_u = $sql_u->get_result();
-                if($result_u && $result_u->num_rows>0){
-                    $row = $result_u->fetch_assoc();
-                    $total_u = $row['total_u'];
-                    echo "<h4>". $row['total_u']."</h4>";
+                $sql_o = $conn->prepare("SELECT COUNT(*) AS total_o FROM tbl_payment");
+                $sql_o -> execute();
+                $result_o = $sql_o->get_result();
+                if($result_o && $result_o->num_rows>0){
+                    $row = $result_o->fetch_assoc();
+                    $total_o = $row['total_o'];
+                    echo "<h4>". $row['total_o']."</h4>";
                 }else { echo "<h4>0</h4>"; }
                 ?>
-                <a href="userdetails.php">View</a>
+                <a href="order.php">View</a>
             </div>
         </div>
         <div class="total-order">
@@ -104,20 +104,20 @@
         </div>
         <div class="total-order">
             <div class="order-head">
-                <h4>Contact Us</h4>
+                <h4>Total User</h4>
             </div>
             <div class="order-body">
                 <?php
-                $sql_cu = $conn->prepare("SELECT COUNT(*) AS total_cu FROM tbl_contactus");
-                $sql_cu -> execute();
-                $result_cu = $sql_cu->get_result();
-                if($result_cu && $result_cu->num_rows>0){
-                    $row = $result_cu->fetch_assoc();
-                    $total_cu = $row['total_cu'];
-                    echo "<h4>". $row['total_cu']."</h4>";
+                $sql_u = $conn->prepare("SELECT COUNT(*) AS total_u FROM users");
+                $sql_u -> execute();
+                $result_u = $sql_u->get_result();
+                if($result_u && $result_u->num_rows>0){
+                    $row = $result_u->fetch_assoc();
+                    $total_u = $row['total_u'];
+                    echo "<h4>". $row['total_u']."</h4>";
                 }else { echo "<h4>0</h4>"; }
                 ?>
-                <a href="contactus-details.php">View</a>
+                <a href="userdetails.php">View</a>
             </div>
         </div>
         <div class="total-order">

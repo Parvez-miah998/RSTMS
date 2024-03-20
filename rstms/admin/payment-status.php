@@ -45,8 +45,8 @@
                             <th>Food Name</th>
                             <th>Unit Price</th>
                             <th>Quantity</th>
+                            <th>VAT &#37;</th>
                             <th>Total Unit Price</th>
-                            <th>VAT</th>
                             <th>Total Amount</th>
                             <th>Order Date</th>
                             <th>Payment Status</th>
@@ -60,11 +60,11 @@
                         echo "<td>".$row['order_id']."</td>";
                         echo "<td>".$row['u_name']."</td>";
                         echo "<td>".$row['f_title']."</td>";
-                        echo "<td>".$row['f_disctprice']."</td>";
+                        echo "<td>&#36; ".$row['f_disctprice']."</td>";
                         echo "<td>".$row['o_quantity']."</td>";
-                        echo "<td>".$row['total_amount']."</td>";
                         echo "<td>".$row['f_vat']."</td>";
-                        echo "<td>".$row['amount']."</td>";
+                        echo "<td>&#36; ".$row['total_amount']."</td>";
+                        echo "<td>&#36; ".$row['amount']."</td>";
                         echo "<td>".$row['o_date']."</td>";
                         echo "<td>";
                         if (empty($row['payment_status']) || is_null($row['payment_status'])) {
@@ -75,7 +75,12 @@
                         }
                         echo "</td>";
                         echo "<td>".$row['t_name']."</td>";
-                        echo '<td><form><button type="submit" name="pdf-btn"><i class="fa-solid fa-print"></i></button> </form></td>';
+                        echo '<td>
+                                <form action="pdf_print.php" method="POST" target="_blank">
+                                    <input type="hidden" name="order_id" value="' . $row["order_id"] . '">
+                                    <button type="submit" name="pdf_btn"><i class="fa-solid fa-print"></i></button>
+                                </form>
+                              </td>';
                         echo "</tr>"; 
                     }
                     echo "</tbody>";
