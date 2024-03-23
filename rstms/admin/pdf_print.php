@@ -3,10 +3,6 @@ session_start();
 include('includes/dbconnection.php');
 require_once('phpqrcode/qrlib.php');
 
-if (!isset($_SESSION['admin_email'])) {
-    header("Location: ../users/login.php");
-    exit();
-}
 
 date_default_timezone_set('Asia/Dhaka');
 

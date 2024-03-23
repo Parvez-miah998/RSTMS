@@ -1,11 +1,6 @@
 <?php
-    include('includes/dbconnection.php');
     include('includes/header.php');
     include('includes/sidebar.php');
-    if (!isset($_SESSION['admin_email'])) {
-        header("Location: ../users/login.php");
-        exit();
-    }
 ?>
 
 
@@ -17,7 +12,7 @@
             <p style="color: green;"> <?php echo $message; ?> </p>
         <?php endif; ?>
         <div class="search-btn">
-            <form action="" method="GET" target="_blank">
+            <form action="" method="GET">
                 <input type="search" id="searchInput" name="search" placeholder="Find Category">
                 <button type="submit"><i class="fas fa-search"></i></button>
             </form>
@@ -49,7 +44,12 @@
                         $currentPage = 1;
                     }
                     $offset = ($currentPage - 1) * $rowsPerPage;
-                    $sql = "SELECT * FROM tbl_food LIMIT $rowsPerPage OFFSET $offset";
+                    $search = isset($_GET['search']) ? $_GET['search'] : '';
+                    $searchCondition = '';
+                    if (!empty($search)) {
+                        $searchCondition = "WHERE f_title LIKE '%$search%'";
+                    }
+                    $sql = "SELECT * FROM tbl_food $searchCondition LIMIT $rowsPerPage OFFSET $offset";
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();

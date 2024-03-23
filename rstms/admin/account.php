@@ -1,12 +1,7 @@
 <?php
     include('includes/header.php');
     include('includes/sidebar.php');
-    if (!isset($_SESSION['admin_email'])) {
-        header("Location: ../users/login.php");
-        exit();
-    }
 ?>
-
 <div class="container">
     <div class="header">
         <h1>Cost Details</h1>

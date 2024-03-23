@@ -1,10 +1,7 @@
 <?php
 session_start();
 include('includes/dbconnection.php');
-if (!isset($_SESSION['admin_email'])) {
-        header("Location: ../users/login.php");
-        exit();
-    }
+require_once('phpqrcode/qrlib.php');
 
 // Set the default timezone to Dhaka
 date_default_timezone_set('Asia/Dhaka');

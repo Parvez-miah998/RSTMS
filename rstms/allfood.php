@@ -48,7 +48,15 @@
         </form>
     </div>
     <?php
-$sql = "SELECT * FROM tbl_food";
+    $rowsPerPage = 4;
+    if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+        $currentPage = $_GET['page'];
+    }
+    else{
+        $currentPage = 1;
+    }
+    $offset = ($currentPage - 1) * $rowsPerPage;
+$sql = "SELECT * FROM tbl_food LIMIT $rowsPerPage OFFSET $offset";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -84,8 +92,20 @@ if ($result && $result->num_rows>0) {
             $truncatedDesc = substr($row['f_desc'], 0, 100);
             echo "<p class='truncatedDesc' style='font-size:14px;'>".$truncatedDesc."<span class='see-more'style='color:#3dd961;'>...</span></p>";
             // echo "<p>" . $row['f_desc'] . "</p>";
-            echo "<p class='food-price' style='font-size:18px;color:#32fa57;'>Price: <del>&#36; " . $row['f_price'] . "</del></p>";
-            echo "<p class='food-price' style='font-size:18px;color:#06bd27;'>Discount Price: &#36; " . $row['f_disctprice'] . "</p>";
+            $f_price = isset($row['f_price']) ? $row['f_price'] : '';
+            $f_disctprice = isset($row['f_disctprice']) ? $row['f_disctprice'] : '';
+
+            // Calculate discount percentage
+            if ($f_price != 0) {
+                $f_discount = (($f_price - $f_disctprice) / $f_price) * 100;
+            } else {
+                $f_discount = 0;
+            }
+            echo "<p class='food-price' style='font-size:18px;color:#32fa57;'>Price: <del>&#36; " . $f_price . "</del></p>";
+            echo "<p class='food-price' style='font-size:18px;color:#06bd27;'>Discount Price: &#36; " . number_format($f_disctprice, 2) . "</p>";
+            echo "<div class='discountprice'>"; 
+            echo number_format($f_discount, 2) . " &#37;<br> OFF"; 
+            echo "</div>";
             echo "</div>";
             echo "</div>";
             echo "</div>";
@@ -95,7 +115,25 @@ if ($result && $result->num_rows>0) {
             }
             $count++;
         }
-
+        $sqlCount = "SELECT COUNT(*) AS total FROM tbl_food";
+        $resultCount = $conn->query($sqlCount);
+        $rowCount = $resultCount->fetch_assoc()['total'];
+        $totalPages = ceil($rowCount / $rowsPerPage);
+        // $totalPages = ceil($result->num_rows/$rowsPerPage);
+        echo '<div class="pagination" style="margin-bottom: 15px;">';
+        if ($totalPages > 1): 
+            echo '<ul>';
+            echo '<li><a href="?page=1">&laquo;</a></li>';
+            for ($page = 1; $page <= $totalPages; $page++):
+                $class = ($page == $currentPage) ? 'class="active"' : '';
+                echo '<li ' . $class . '>';
+                echo '<a href="?page=' . $page . '">' . $page . '</a>';
+                echo '</li>';
+            endfor;
+            echo '<li><a href="?page=' . $totalPages . '">&raquo;</a></li>';
+            echo '</ul>';
+        endif;
+        echo '</div>';
 }else{
     echo "No Found Food Item!";
 }
@@ -169,6 +207,58 @@ if ($result && $result->num_rows>0) {
                }
            }
         ?>
+        <style type="text/css">
+            .discountprice{
+               height:70px;
+               width: 70px;
+               background-color: #12f50a;
+               text-align: center;
+               position: absolute;
+               margin-top: -15px;
+               margin-bottom: 0px;
+               margin-left: -100px;
+               padding: 15px;
+               transform: rotate(-15deg);
+               transform-origin: top left;
+               font-family: Arial;
+               font-size: 14px!important;
+               border-radius: 50%;
+               color: black!important;
+            }
+            .pagination {
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .pagination ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .pagination ul li {
+                display: inline-block;
+                margin-right: 5px;
+            }
+
+            .pagination ul li a {
+                display: block;
+                padding: 5px 10px;
+                text-decoration: none;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                color: #333;
+            }
+
+            .pagination ul li.active a {
+                background-color: #3498db;
+                color: #fff;
+            }
+
+            .pagination ul li a:hover {
+                background-color: #f0f0f0;
+            }
+        </style>
 
         <!--Script for control the quantity message end-->
         <script>

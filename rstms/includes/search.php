@@ -63,7 +63,7 @@ if ($search_result && $search_result->num_rows>0) {
         echo "<input type='button' value='+' onclick='incrementValue(\"quantity_$count\")' style='border:none;padding:5px;background-color:#39e667;margin-right:30px;border-radius:4px;' />"; 
         echo "<button type='submit' style='background:transparent; border:none;cursor:pointer;color:#1164d9'><i class='fa-solid fa-cart-shopping'></i></button></form>";
 
-        echo " <form action='quickview.php' method='GET' style='display:inline-block;'>";
+        echo " <form action='../quickview.php' method='GET' style='display:inline-block;'>";
         echo " <input type='hidden' name='f_id' value='".$row['f_id']."'>";
         echo " <button style='background:transparent; border:none;cursor:pointer;color:#1164d9' href='quickview.php'><i class='fa-regular fa-eye' style='margin-left: 5px;'></i></button></form>";
         echo " </div>";
@@ -76,8 +76,20 @@ if ($search_result && $search_result->num_rows>0) {
         $truncatedDesc = substr($row['f_desc'], 0, 100);
         echo "<p class='truncatedDesc' style='font-size:14px;'>".$truncatedDesc."<span class='see-more'style='color:#3dd961;'>...</span></p>";
         // echo "<p>" . $row['f_desc'] . "</p>";
-        echo "<p class='food-price' style='font-size:18px;color:#32fa57;'>Price: <del>&#36; " . $row['f_price'] . "</del></p>";
-        echo "<p class='food-price' style='font-size:18px;color:#06bd27;'>Discount Price: &#36; " . $row['f_disctprice'] . "</p>";
+        $f_price = isset($row['f_price']) ? $row['f_price'] : '';
+            $f_disctprice = isset($row['f_disctprice']) ? $row['f_disctprice'] : '';
+
+            // Calculate discount percentage
+            if ($f_price != 0) {
+                $f_discount = (($f_price - $f_disctprice) / $f_price) * 100;
+            } else {
+                $f_discount = 0;
+            }
+            echo "<p class='food-price' style='font-size:18px;color:#32fa57;'>Price: <del>&#36; " . $f_price . "</del></p>";
+            echo "<p class='food-price' style='font-size:18px;color:#06bd27;'>Discount Price: &#36; " . number_format($f_disctprice, 2) . "</p>";
+            echo "<div class='discountprice'>"; 
+            echo number_format($f_discount, 2) . " &#37;<br> OFF"; 
+            echo "</div>";
         echo "</div>";
         echo "</div>";
         echo "</div>";
@@ -158,6 +170,25 @@ else{
                }
            }
         ?>
+        <style type="text/css">
+            .discountprice{
+               height:70px;
+               width: 70px;
+               background-color: #12f50a;
+               text-align: center;
+               position: absolute;
+               margin-top: -15px;
+               margin-bottom: 0px;
+               margin-left: -100px;
+               padding: 15px;
+               transform: rotate(-15deg);
+               transform-origin: top left;
+               font-family: Arial;
+               font-size: 14px!important;
+               border-radius: 50%;
+               color: black!important;
+            }
+        </style>
 
         <!--Script for control the quantity message end-->
         <script>

@@ -20,66 +20,6 @@
   if (window.history.replaceState) {
     window.history.replaceState(null,null,window.location.href);
   }
-
-  $(document).ready(function() {
-    $('.increase-btn').click(function() {
-      var row = $(this).closest('tr');
-      var orderId = row.data('order-id');
-      var quantityElement = row.find('.quantity');
-      var currentValue = parseInt(quantityElement.text()) || 0;
-      currentValue++;
-      quantityElement.text(currentValue);
-      updateQuantity(orderId, currentValue, row);
-    });
-
-    $('.decrease-btn').click(function() {
-      var row = $(this).closest('tr');
-      var orderId = row.data('order-id');
-      var quantityElement = row.find('.quantity');
-      var currentValue = parseInt(quantityElement.text()) || 0;
-      currentValue = Math.max(0, currentValue - 1);
-      quantityElement.text(currentValue);
-      updateQuantity(orderId, currentValue, row);
-    });
-
-    function updateQuantity(orderId, quantity, row) {
-      $.ajax({
-        url: 'cart.php',
-        method: 'POST',
-        data: {
-          orderId: orderId,
-          quantity: quantity
-        },
-        success: function(response) {
-          if (response !== '') {
-            // Update total amount in the row
-            var totalAmountElement = row.find('.total-amount');
-            totalAmountElement.text(response);
-
-            // Update total amount fields
-            updateTotalAmountFields();
-          } else {
-            // Handle error response
-            console.error("Error updating quantity and total amount.");
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error(xhr.responseText);
-        }
-      });
-    }
-
-    function updateTotalAmountFields() {
-      // Calculate total amount from all rows
-      var totalAmount = 0;
-      $('.total-amount').each(function() {
-        totalAmount += parseFloat($(this).text());
-      });
-
-      // Update total amount fields
-      $('.total-amount-display').text('$' + totalAmount.toFixed(2));
-    }
-  });
 </script>
   
 </head>
@@ -183,6 +123,7 @@ if (isset($_SESSION['user'])) {
 
         if (isset($_POST['submit'])) {
             $selected_table = $_POST['table'];
+            $_SESSION['selected_table'] = $selected_table;
 
             $fetch_sql = $conn->prepare("SELECT ta_id FROM tbl_table WHERE t_name = ?");
             $fetch_sql->bind_param("s", $selected_table);
@@ -263,28 +204,32 @@ if (isset($_SESSION['user'])) {
             $has_food = $fetch_order_result->fetch_assoc()['o_quantity'] > 0;
 
             if ($has_food) {
+                // Check if a table has been selected
+                $userHasSelectedTable = isset($_SESSION['selected_table']);
 
+                // Display table selection field and selected table message accordingly
+                echo "<form method='post'>";
                 echo "<select name='table' id='table' onchange='submitForm()' " . ($userHasSelectedTable ? "style='display:none;'" : "") . ">";
                 while ($row = $tbl_result->fetch_assoc()) {
-                    
                     if (!$userHasSelectedTable && $row['t_status'] == 'Enable') {
                         $selected = ""; 
                         echo "<option value='" . $row['t_name'] . "' $selected>" . $row['t_name'] . "</option>";
-                    } elseif ($userHasSelectedTable && $row['t_name'] == $selected_table) {
+                    } elseif ($userHasSelectedTable && $row['t_name'] == $_SESSION['selected_table']) {
                         $selected = "selected";
                         echo "<option value='" . $row['t_name'] . "' $selected>" . $row['t_name'] . "</option>";
                     }
                 }
                 echo "</select>";
-                
+
                 if (!$userHasSelectedTable) {
-                    echo "<button type='submit' name='submit' id='submitButton' style='margin-top: 10px; margin-left: 5px; padding: 2px;" . ($userHasSelectedTable ? "display:none;" : "") . "'>Submit</button>";
+                    echo "<button type='submit' name='submit' id='submitButton' style='margin-top: 10px; margin-left: 5px; padding: 2px;'>Submit</button>";
                 }
 
                 echo "</form>";
-                if (!empty($selected_table)) {
-                    echo "<p id='selectedTableMessage' style='" . ($userHasSelectedTable ? "display:block;" : "display:none;") . "'>Selected Table: $selected_table</p>";
+                if (!empty($_SESSION['selected_table']) || $userHasSelectedTable) {
+                    echo "<p id='selectedTableMessage'>Selected Table: {$_SESSION['selected_table']}</p>";
                 }
+
             }
             else {
                 // No food in order, hide the table selection field
@@ -294,7 +239,6 @@ if (isset($_SESSION['user'])) {
         } else {
             echo "<p style='padding-left: 20px;text-align:center;color:green;'>No tables found for the user.</p>";
         }
-
     } else {
         echo "<p style='padding-left: 20px;text-align:center;color:green;'>User Not Found!</p>";
     }
@@ -340,7 +284,7 @@ if (isset($_SESSION['user'])) {
                     $table_sql->execute();
                     $table_result = $table_sql->get_result();
                     $table_count = $table_result->fetch_assoc()['count'];
-                    if ($table_count > 0) {
+                    if (($table_count > 0 || isset($_SESSION['selected_table'])) && !empty($_SESSION['selected_table']) && $totalAmount > 0) {
                         echo "<div class='btn-order'>";
                         echo "<form action='checkout.php' method='POST'>";
                         echo "<input type='hidden' name='table' value='" . (isset($_POST['table']) ? $_POST['table'] : '') . "'>";
@@ -349,7 +293,7 @@ if (isset($_SESSION['user'])) {
                         echo "</div>";
                     }
                     else{
-                        echo "<p style='text-align: center; color:#080807;font-family:Arial Rounded MT Bold;font-size:19px;font-weight:bolder;'>Please select your table &#128512;!</p>";
+                        echo "<p style='text-align: center; color:#080807;font-family:Arial Rounded MT Bold;font-size:19px;font-weight:bolder;'>Please select your table or food &#128512;!</p>";
                     }
                 }
             }
@@ -457,23 +401,82 @@ if (isset($_SESSION['user'])) {
     </style>
 
     <script>
-    // Function to hide the button and show the message if a table has been selected
-    function adjustDisplay() {
-        var selectedTable = "<?php echo isset($_POST['table']) ? $_POST['table'] : ''; ?>";
-        if (selectedTable !== '') {
-            document.getElementById("submitButton").style.display = "none";
-            document.getElementById("table").style.display = "none";
-            document.getElementById("selectedTableMessage").style.display = "block";
+        $(document).ready(function() {
+    $('.increase-btn').click(function() {
+      var row = $(this).closest('tr');
+      var orderId = row.data('order-id');
+      var quantityElement = row.find('.quantity');
+      var currentValue = parseInt(quantityElement.text()) || 0;
+      currentValue++;
+      quantityElement.text(currentValue);
+      updateQuantity(orderId, currentValue, row);
+    });
+
+    $('.decrease-btn').click(function() {
+      var row = $(this).closest('tr');
+      var orderId = row.data('order-id');
+      var quantityElement = row.find('.quantity');
+      var currentValue = parseInt(quantityElement.text()) || 0;
+      currentValue = Math.max(0, currentValue - 1);
+      quantityElement.text(currentValue);
+      updateQuantity(orderId, currentValue, row);
+    });
+
+    function updateQuantity(orderId, quantity, row) {
+      $.ajax({
+        url: 'cart.php',
+        method: 'POST',
+        data: {
+          orderId: orderId,
+          quantity: quantity
+        },
+        success: function(response) {
+          if (response !== '') {
+            // Update total amount in the row
+            var totalAmountElement = row.find('.total-amount');
+            totalAmountElement.text(response);
+
+            // Update total amount fields
+            updateTotalAmountFields();
+          } else {
+            // Handle error response
+            console.error("Error updating quantity and total amount.");
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
         }
+      });
     }
-    
-    // Call the function when the page loads
-    window.onload = adjustDisplay;
-    
-    // Function to submit the form
-    function submitForm() {
-        document.getElementById("tableForm").submit();
+
+    function updateTotalAmountFields() {
+      // Calculate total amount from all rows
+      var totalAmount = 0;
+      $('.total-amount').each(function() {
+        totalAmount += parseFloat($(this).text());
+      });
+
+      // Update total amount fields
+      $('.total-amount-display').text('$' + totalAmount.toFixed(2));
     }
+  });
+    // Function to hide the button and show the message if a table has been selected
+    // function adjustDisplay() {
+    //     var selectedTable = "<?php echo isset($_POST['table']) ? $_POST['table'] : ''; ?>";
+    //     if (selectedTable !== '') {
+    //         document.getElementById("submitButton").style.display = "none";
+    //         document.getElementById("table").style.display = "none";
+    //         document.getElementById("selectedTableMessage").style.display = "block";
+    //     }
+    // }
+    
+    // // Call the function when the page loads
+    // window.onload = adjustDisplay;
+    
+    // // Function to submit the form
+    // function submitForm() {
+    //     document.getElementById("tableForm").submit();
+    // }
 </script>
 
 

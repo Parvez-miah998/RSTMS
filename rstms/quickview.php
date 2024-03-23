@@ -47,8 +47,21 @@
           <div class="food-description">
             <h2 class="food-title"><?php echo isset($row['f_title']) ? $row['f_title'] : ''; ?></h2>
             <p><?php echo isset($row['f_desc']) ? $row['f_desc'] : ''; ?> </p>
-            <p class="food-price"><strong>Price:</strong> &#36;<del> <?php echo isset($row['f_price']) ? $row['f_price'] : ''; ?></del></p>
-            <p class="food-price"><strong>Discount Price:</strong> &#36; <?php echo isset($row['f_disctprice']) ? $row['f_disctprice'] : ''; ?></p>
+            <?php
+            $f_price = isset($row['f_price']) ? $row['f_price'] : '';
+            $f_disctprice = isset($row['f_disctprice']) ? $row['f_disctprice'] : '';
+            if ($f_price != 0) {
+              $f_discount = (($f_price - $f_disctprice) / $f_price) * 100;
+            }
+            else{
+              $f_discount = 0;
+            }
+            ?>
+            <p class="food-price"><strong>Price:</strong> &#36;<del> <?php echo $f_price; ?></del></p>
+            <p class="food-price"><strong>Discount Price:</strong> &#36; <?php echo $f_disctprice; ?></p>
+            <p class="discountprice"><strong>Discount:</strong><br> <?php echo number_format($f_discount,2) ?> &#37; OFF</p>
+            <!-- <p class="food-price"><strong>Price:</strong> &#36;<del> <?php echo isset($row['f_price']) ? $row['f_price'] : ''; ?></del></p>
+            <p class="food-price"><strong>Discount Price:</strong> &#36; <?php echo isset($row['f_disctprice']) ? $row['f_disctprice'] : ''; ?></p> -->
             <!-- <p class="food-price">Up to: 30 &percnt;</p> -->
             <h6 class="food-price">Additional vat: <?php echo isset($row['f_vat']) ? $row['f_vat'] : ''; ?> &percnt;</h6>
             <div class="food-buttons">
@@ -249,6 +262,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     .buttons button:hover {
       background-color: #f0f0f0;
+    }
+    .discountprice{
+       height:auto;
+       width: auto;
+       background-color: #37f230;
+       text-align: center;
+       position: absolute;
+       margin-top: -260px;
+       margin-left: 5px;
+       padding: 15px;
+       transform: rotate(-15deg);
+       transform-origin: top left;
+       font-family: Arial;
+       font-size: 28px;
+       border-radius: 50%;
     }
   </style>
 

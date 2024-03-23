@@ -1,6 +1,10 @@
 <?php
 session_start();
 include ('dbconnection.php');
+if (!isset($_SESSION['admin_email'])) {
+        header('Location: ../users/login.php');
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,7 +32,28 @@ include ('dbconnection.php');
     		window.history.replaceState(null, null, window.location.href);
     	}
     </script>
+    <!-- Style for Profile active green dot start -->
+<style type="text/css">
+    .active-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+    margin-right: -5px;
+    margin-top: -20px;
+    animation: pulse 0.5s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+</style>
+<!-- Style for Profile active green dot end -->
 </head>
 <body>
-    
-    
