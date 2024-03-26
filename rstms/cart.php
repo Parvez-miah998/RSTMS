@@ -2,12 +2,14 @@
 session_start();
 include('includes/dbconnection.php');
 
+// Check if user is logged in
 if (!isset($_SESSION['user'])) {
     http_response_code(403);
     echo "Unauthorized";
     exit;
 }
 
+// Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $orderId = $_POST['orderId'];
     $quantity = $_POST['quantity'];
@@ -17,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selectSql->bind_param("i", $orderId);
     $selectSql->execute();
     $result = $selectSql->get_result();
+
     if ($row = $result->fetch_assoc()) {
         $productPrice = $row['f_disctprice'];
         $vat = $row['f_vat'];
@@ -27,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Update quantity and total amount in the database
         $updateSql = $conn->prepare("UPDATE tbl_order SET o_quantity = ?, total_amount = ? WHERE order_id = ?");
         $updateSql->bind_param("idi", $quantity, $totalAmount, $orderId);
+
         if ($updateSql->execute()) {
             if ($quantity == 0) {
                 // Delete row if quantity becomes 0
@@ -34,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $deleteSql->bind_param("i", $orderId);
                 $deleteSql->execute();
             }
-            echo "Quantity and total amount updated successfully";
+            echo $totalAmount; // Return the new total amount for updating in the UI
         } else {
             http_response_code(500);
             echo "Error updating quantity and total amount";

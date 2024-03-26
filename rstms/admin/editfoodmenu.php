@@ -12,7 +12,7 @@
         $message = '';
         if ($_SESSION['admin_email']) {
             if (isset($_POST['menu-btn'])) {
-                if (empty($_POST['fm_title']) || empty($_POST['fm_desc']) || empty($_POST['fm_price']) || empty($_POST['fm_disprice']) || empty($_POST['fm_disprice']) || empty($_POST['fm_catname']) || empty($_POST['fm_active']) || empty($_POST['fm_featured'])) {
+                if (empty($_POST['fm_title']) || empty($_POST['fm_desc']) || empty($_POST['fm_price']) || empty($_POST['fm_disprice']) || empty($_POST['fm_disprice']) || empty($_POST['fm_catname']) || empty($_POST['fm_featured'])) {
                     $message = "All Fields are Required!";
                 }
                 else{
@@ -23,21 +23,20 @@
                     $fm_disprice = $_POST['fm_disprice'];
                     $fm_vat = $_POST['fm_vat'];
                     $fm_catname = $_POST['fm_catname'];
-                    $fm_active = $_POST['fm_active'];
                     $fm_featured = $_POST['fm_featured'];
 
                         if ($_FILES['fm_image']['size'] > 0) {
                             $fm_image = $_FILES['fm_image']['name'];
                             $fm_image_temp = $_FILES['fm_image']['tmp_name'];
                             move_uploaded_file($fm_image_temp, '../assets/image/'.$fm_image);
-                            $sql = "UPDATE tbl_food SET f_title = ?, f_desc = ?, f_price = ?, f_disctprice = ?, f_vat = ?, c_name = ?, f_active = ?, f_featured = ?, f_image = ? WHERE f_id = ?";
+                            $sql = "UPDATE tbl_food SET f_title = ?, f_desc = ?, f_price = ?, f_disctprice = ?, f_vat = ?, c_name = ?, f_featured = ?, f_image = ? WHERE f_id = ?";
                             $stmt = $conn->prepare($sql);
-                            $stmt->bind_param("sssssssssi", $fm_title, $fm_desc, $fm_price, $fm_disprice, $fm_vat, $fm_catname, $fm_active, $fm_featured, $fm_image, $f_id);
+                            $stmt->bind_param("ssssssssi", $fm_title, $fm_desc, $fm_price, $fm_disprice, $fm_vat, $fm_catname, $fm_featured, $fm_image, $f_id);
                         }
                         else{
-                            $sql = "UPDATE tbl_food SET f_title = ?, f_desc = ?, f_price = ?, f_disctprice = ?, f_vat = ?, c_name = ?, f_active = ?, f_featured = ? WHERE f_id = ?";
+                            $sql = "UPDATE tbl_food SET f_title = ?, f_desc = ?, f_price = ?, f_disctprice = ?, f_vat = ?, c_name = ?, f_featured = ? WHERE f_id = ?";
                             $stmt = $conn->prepare($sql);
-                            $stmt->bind_param("ssssssssi", $fm_title, $fm_desc, $fm_price, $fm_disprice, $fm_vat, $fm_catname, $fm_active, $fm_featured, $f_id);
+                            $stmt->bind_param("ssssssssi", $fm_title, $fm_desc, $fm_price, $fm_disprice, $fm_vat, $fm_catname, $fm_featured, $f_id);
                         }
                         if ($stmt->execute()) {
                             $message = "Food Menu Update Successful!";
@@ -96,14 +95,6 @@
                         <?php endforeach; ?>
                     </select>
                     <!-- <input type="text" name="fm_catname" placeholder="Category Name" value="<?php echo isset($row['c_name']) ? $row['c_name'] : ''; ?>" required> -->
-                </div>
-                <div class="form-data">
-                    <label for="fm_active">Food Status: </label>
-                    <select name="fm_active" id="fm_active" required>
-                        <option <?php echo ($row['f_active'] == 'Active') ? 'selected' : '';?>>Active</option>
-                        <option <?php echo ($row['f_active'] == 'Unactive') ? 'selected' : '';?>>Unactive</option>
-                    </select>
-                    <!-- <input type="text" name="fm_active" placeholder="Menu Status" value="<?php echo isset($row['f_active']) ? $row['f_active'] : ''; ?>" required> -->
                 </div>
                 <div class="form-data">
                     <label for="fm_featured">Food Featured: </label>

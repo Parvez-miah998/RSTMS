@@ -24,28 +24,28 @@
   
 </head>
 <body>
-	<div class="container-fluid">
-	    <div class="cart-details">
-	        <div class="header">
-	            <h2>All the Cart</h2>
+    <div class="container-fluid">
+        <div class="cart-details">
+            <div class="header">
+                <h2>All the Cart</h2>
                 <?php if (!empty($message)) : ?>
                     <p style="color: green;"> <?php echo $message;?></p>
                 <?php endif; ?>
-	        </div>
-	        <table class="all-cart">
-	            <thead>
-	                <tr>
-	                    <th>SL</th>
-	                    <th>Product Title</th>
-	                    <th>Unit Price</th>
-	                    <th>Product Quantity</th>
-	                    <th>VAT</th>
-	                    <th>Total Price</th>
+            </div>
+            <table class="all-cart">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Product Title</th>
+                        <th>Unit Price</th>
+                        <th>Product Quantity</th>
+                        <th>VAT</th>
+                        <th>Total Price</th>
                         <th>Update Quantity</th>
-	                    <th>Action</th>
-	                </tr>
-	            </thead>
-	            <tbody>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
                   <?php
                     if (isset($_SESSION['user'])) {
                         $email = $_SESSION['user'];
@@ -268,7 +268,7 @@ if (isset($_SESSION['user'])) {
                     }
                 }
                 ?>
-	        </table>
+            </table>
             <!--Code for Confirm button start-->
             <?php
             if (isset($_SESSION['user'])) {
@@ -299,13 +299,13 @@ if (isset($_SESSION['user'])) {
             }
             ?>
             <!--Code for Confirm button end-->
-	    </div>
+        </div>
         <!--Cart area End-->
-	</div>
+    </div>
     
 
 
-	<style>
+    <style>
         /* General styles */
         body {
             font-family: Arial, sans-serif;
@@ -314,7 +314,7 @@ if (isset($_SESSION['user'])) {
             padding: 0;
         }
         .container-fluid{
-        	margin-bottom: 60px;
+            margin-bottom: 60px;
         }
         /* Styles for the cart tables */
         .cart-details,
@@ -401,82 +401,65 @@ if (isset($_SESSION['user'])) {
     </style>
 
     <script>
-        $(document).ready(function() {
+       $(document).ready(function() {
     $('.increase-btn').click(function() {
-      var row = $(this).closest('tr');
-      var orderId = row.data('order-id');
-      var quantityElement = row.find('.quantity');
-      var currentValue = parseInt(quantityElement.text()) || 0;
-      currentValue++;
-      quantityElement.text(currentValue);
-      updateQuantity(orderId, currentValue, row);
+        var row = $(this).closest('tr');
+        var orderId = row.data('order-id');
+        var quantityElement = row.find('.quantity');
+        var currentValue = parseInt(quantityElement.text()) || 0;
+        currentValue++;
+        quantityElement.text(currentValue);
+        updateQuantity(orderId, currentValue);
     });
 
     $('.decrease-btn').click(function() {
-      var row = $(this).closest('tr');
-      var orderId = row.data('order-id');
-      var quantityElement = row.find('.quantity');
-      var currentValue = parseInt(quantityElement.text()) || 0;
-      currentValue = Math.max(0, currentValue - 1);
-      quantityElement.text(currentValue);
-      updateQuantity(orderId, currentValue, row);
+        var row = $(this).closest('tr');
+        var orderId = row.data('order-id');
+        var quantityElement = row.find('.quantity');
+        var currentValue = parseInt(quantityElement.text()) || 0;
+        if (currentValue > 0) {
+            currentValue--;
+            quantityElement.text(currentValue);
+            updateQuantity(orderId, currentValue);
+        }
     });
 
-    function updateQuantity(orderId, quantity, row) {
-      $.ajax({
-        url: 'cart.php',
-        method: 'POST',
-        data: {
-          orderId: orderId,
-          quantity: quantity
-        },
-        success: function(response) {
-          if (response !== '') {
-            // Update total amount in the row
-            var totalAmountElement = row.find('.total-amount');
-            totalAmountElement.text(response);
+    function updateQuantity(orderId, quantity, row) { // Receive row as a parameter
+        $.ajax({
+            url: 'cart.php',
+            method: 'POST',
+            data: {
+                orderId: orderId,
+                quantity: quantity
+            },
+            success: function(response) {
+                if (response !== '') {
+                    // Update total amount in the row
+                    var totalAmountElement = row.find('.total-amount');
+                    totalAmountElement.text(response);
 
-            // Update total amount fields
-            updateTotalAmountFields();
-          } else {
-            // Handle error response
-            console.error("Error updating quantity and total amount.");
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error(xhr.responseText);
-        }
-      });
+                    // Update total amount fields
+                    updateTotalAmountFields();
+                } else {
+                    // Handle error response
+                    console.error("Error updating quantity and total amount.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     }
 
     function updateTotalAmountFields() {
-      // Calculate total amount from all rows
-      var totalAmount = 0;
-      $('.total-amount').each(function() {
-        totalAmount += parseFloat($(this).text());
-      });
-
-      // Update total amount fields
-      $('.total-amount-display').text('$' + totalAmount.toFixed(2));
+        var totalAmount = 0;
+        $('.total-amount').each(function() {
+            totalAmount += parseFloat($(this).text());
+        });
+        $('.total-amount-display').text('$' + totalAmount.toFixed(2));
     }
-  });
-    // Function to hide the button and show the message if a table has been selected
-    // function adjustDisplay() {
-    //     var selectedTable = "<?php echo isset($_POST['table']) ? $_POST['table'] : ''; ?>";
-    //     if (selectedTable !== '') {
-    //         document.getElementById("submitButton").style.display = "none";
-    //         document.getElementById("table").style.display = "none";
-    //         document.getElementById("selectedTableMessage").style.display = "block";
-    //     }
-    // }
-    
-    // // Call the function when the page loads
-    // window.onload = adjustDisplay;
-    
-    // // Function to submit the form
-    // function submitForm() {
-    //     document.getElementById("tableForm").submit();
-    // }
+});
+
 </script>
 
 

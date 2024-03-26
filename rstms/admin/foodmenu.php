@@ -12,7 +12,7 @@
             <p style="color: green;"> <?php echo $message; ?> </p>
         <?php endif; ?>
         <div class="search-btn">
-            <form action="" method="GET">
+            <form id="searchForm" action="" method="GET">
                 <input type="search" id="searchInput" name="search" placeholder="Find Category">
                 <button type="submit"><i class="fas fa-search"></i></button>
             </form>
@@ -29,14 +29,14 @@
                         <th>VAT</th>
 						<th>Image</th>
 						<th>Category Name</th>
-						<th>Status</th>
+						<!-- <th>Status</th> -->
 						<th>Featured</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
                     <?php 
-                    $rowsPerPage = 25;
+                    $rowsPerPage = 15;
                     if (isset($_GET['page']) && is_numeric($_GET['page'])) {
                         $currentPage = $_GET['page'];
                     }
@@ -66,7 +66,7 @@
                             echo '<td>'.$row["f_vat"].'&#37;</td>';
                             echo "<td><img class='form-image' src='../assets/image/{$row["f_image"]}' alt='food-image'></td>";
                             echo '<td>'.$row['c_name'].'</td>';
-                            echo '<td>'.$row['f_active'].'</td>';
+                            // echo '<td>'.$row['f_active'].'</td>';
                             echo '<td>'.$row['f_featured'].'</td>';
                             echo '<td>';
                             echo "<form action='editfoodmenu.php' method='GET' style='display:inline-block;'>";
@@ -301,6 +301,15 @@
 	        FontAwesome.dom.i2svg();
 	    });
 	</script>
+    <script>
+document.getElementById("searchForm").addEventListener("submit", function(event) {
+    var searchInput = document.getElementById("searchInput").value.trim();
+    if (searchInput === "") {
+        event.preventDefault(); // Cancel form submission
+        alert("Please enter foodmenu name!");
+    }
+});
+</script>
 
 <?php
     include('includes/footer.php');

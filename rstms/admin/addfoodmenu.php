@@ -12,10 +12,9 @@
             $fm_disprice = mysqli_real_escape_string($conn, $_REQUEST['fm_disprice']);
             $fm_vat = mysqli_real_escape_string($conn, $_REQUEST['fm_vat']);
             $fm_catname = mysqli_real_escape_string($conn, $_REQUEST['fm_catname']);
-            $fm_active = mysqli_real_escape_string($conn, $_REQUEST['fm_active']);
             $fm_featured = mysqli_real_escape_string($conn, $_REQUEST['fm_featured']);
 
-            if (empty($_REQUEST['fm_title']) || empty($_REQUEST['fm_desc']) || empty($_REQUEST['fm_price']) || empty($_REQUEST['fm_disprice']) || empty($_REQUEST['fm_vat']) || empty($_REQUEST['fm_catname']) || empty($_REQUEST['fm_active']) || empty($_REQUEST['fm_featured'])) {
+            if (empty($_REQUEST['fm_title']) || empty($_REQUEST['fm_desc']) || empty($_REQUEST['fm_price']) || empty($_REQUEST['fm_disprice']) || empty($_REQUEST['fm_vat']) || empty($_REQUEST['fm_catname']) || empty($_REQUEST['fm_featured'])) {
                 $message = "All Fields are Required!";
             }
             else{
@@ -42,8 +41,8 @@
                     if($cat_result->num_rows>0){
                         $row = $cat_result->fetch_assoc();
                         $c_id = $row['c_id'];
-                        $stmt = $conn->prepare("INSERT INTO tbl_food (f_title, f_desc, f_price, f_disctprice, f_vat, c_name, c_id, f_active, f_featured, f_image) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                        $stmt->bind_param("ssssssssss", $fm_title, $fm_desc, $fm_price, $fm_disprice, $fm_vat, $fm_catname, $c_id, $fm_active, $fm_featured, $fm_image);
+                        $stmt = $conn->prepare("INSERT INTO tbl_food (f_title, f_desc, f_price, f_disctprice, f_vat, c_name, c_id, f_featured, f_image) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt->bind_param("sssssssss", $fm_title, $fm_desc, $fm_price, $fm_disprice, $fm_vat, $fm_catname, $c_id, $fm_featured, $fm_image);
                         if ($stmt->execute()) {
                             $message = "Food Menu Added Successfilly!";
                         }
@@ -93,14 +92,6 @@
                             <option value="<?php echo $category; ?>"> <?php echo $category; ?></option>
                         <?php endforeach; ?>
                     </select>
-				</div>
-				<div class="form-data">
-                    <label for="fm_active">Food Status: </label>
-                    <select name="fm_active" id="fm_active" required>
-                        <option>Active</option>
-                        <option>Unactive</option>
-                    </select>
-					<!-- <input type="text" name="fm_active" placeholder="Menu Status" required> -->
 				</div>
 				<div class="form-data">
                     <label for="fm_featured">Food Featured: </label>

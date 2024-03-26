@@ -12,7 +12,7 @@
             <p style="color: green;"> <?php echo $message;?></p>
         <?php endif; ?>
 		<div class="search-btn">
-			<form action="" method="GET">
+			<form id="searchForm" action="" method="GET">
 				<input type="search" id="searchInput" name="search" placeholder="Find Category">
 				<button type="submit" name="src-btn"><i class="fas fa-search"></i></button>
 			</form>
@@ -295,6 +295,15 @@
 	        FontAwesome.dom.i2svg();
 	    });
 	</script>
+    <script>
+document.getElementById("searchForm").addEventListener("submit", function(event) {
+    var searchInput = document.getElementById("searchInput").value.trim();
+    if (searchInput === "") {
+        event.preventDefault(); // Cancel form submission
+        alert("Please enter foodcategory name!");
+    }
+});
+</script>
 
 <?php
     include('includes/footer.php');

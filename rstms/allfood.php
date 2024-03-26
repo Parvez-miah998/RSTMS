@@ -42,13 +42,13 @@
   <div class="container">
     <h2 class="food-menu-heading">All Dishes are here</h2>
     <div class="search-box" style="margin-left: 550px;">
-        <form action="includes/search.php" method="GET" target="_blank">
+        <form id="searchForm" action="includes/search.php" method="GET" target="_blank">
             <input type="search" id="searchInput" name="search" placeholder="Find your favourite dish">
             <button type="submit"><i class="fas fa-search"></i></button>
         </form>
     </div>
     <?php
-    $rowsPerPage = 4;
+    $rowsPerPage = 40;
     if (isset($_GET['page']) && is_numeric($_GET['page'])) {
         $currentPage = $_GET['page'];
     }
@@ -62,59 +62,51 @@ $stmt->execute();
 $result = $stmt->get_result();
 if ($result && $result->num_rows>0) {
     $count = 0;
+    echo "<div class ='row' style='display: flex;margin-top:20px;margin-bottom:20px;'>";
     while ($row = $result->fetch_assoc()) {
-            if ($count % 2 === 0) {
-                echo "<div class ='row' style='display: flex;margin-top:20px;margin-bottom:20px;'>";
+            if ($row['f_featured'] === 'Display') {
+            if ($count % 4 === 0 && $count != 0) {
+                echo "</div><div class ='row' style='display: flex;margin-top:20px;margin-bottom:20px;'>";
             }
-            echo "<div class='col-md-6' style='display:inline-block;width:40%;margin-left:4%;border:1px solid #ddd;padding:10px;border-radius:10px;'>";
+            echo "<div class='col-md-3' style='display:inline-block;margin-left:4%;border:1px solid #ddd;padding:5px;border-radius:10px;'>";
             echo "<div class='food-desc'>";
-            echo "<form action='' method='POST' style='display:inline-block;margin-left:70%;'>";
+            echo "<form action='' method='POST' style='display:inline-block;margin-left:40%;'>";
             echo '<input type="hidden" name="food_id" value="' . $row['f_id'] . '">';
             echo '<input type="hidden" name="food_title" value="' . $row['f_title'] . '">';
             echo '<input type="hidden" name="food_disctprice" value="' . $row['f_disctprice'] . '">';
             echo '<input type="hidden" name="food_vat" value="' . $row['f_vat'] . '">';
-            // echo "<input type='number' name='quantity' value='0' min='1' style='border:none;width:30px;'>";
             echo "<input type='button' value='-' onclick='decrementValue(\"quantity_$count\")' style='border:none;padding:5px;background-color:red;border-radius:4px;' />";
             echo "<input type='text' name='quantity' id='quantity_$count' value='0' style='border:none;width:30px;text-align:center;font-size:16px;' onkeypress='return event.charCode >= 48 && event.charCode <= 57' />";
-            echo "<input type='button' value='+' onclick='incrementValue(\"quantity_$count\")' style='border:none;padding:5px;background-color:#39e667;margin-right:30px;border-radius:4px;' />"; 
+            echo "<input type='button' value='+' onclick='incrementValue(\"quantity_$count\")' style='border:none;padding:5px;background-color:#39e667;margin-right:30px;border-radius:4px;' />";
             echo "<button type='submit' style='background:transparent; border:none;cursor:pointer;color:#1164d9'><i class='fa-solid fa-cart-shopping'></i></button></form>";
-
-            echo " <form action='quickview.php' method='GET' style='display:inline-block;'>";
-            echo " <input type='hidden' name='f_id' value='".$row['f_id']."'>";
-            echo " <button style='background:transparent; border:none;cursor:pointer;color:#1164d9' href='quickview.php'><i class='fa-regular fa-eye' style='margin-left: 5px;'></i></button></form>";
-            echo " </div>";
+            echo "<form action='quickview.php' method='GET' style='display:inline-block;'>";
+            echo "<input type='hidden' name='f_id' value='".$row['f_id']."'>";
+            echo "<button style='background:transparent; border:none;cursor:pointer;color:#1164d9' href='quickview.php'><i class='fa-regular fa-eye' style='margin-left: 5px;'></i></button></form>";
+            echo "</div>";
             echo "<div class='food-menu-item'>";
             echo "<div class='food-img'>";
-            echo "<img src='assets/image/" . $row['f_image'] . "' alt='' style='border-radius:50%;' />";
+            echo "<img src='assets/image/" . $row['f_image'] . "' alt='' style='border-radius:50%;height:100px;width:100px;object-fit:cover;' />";
             echo "</div>";
             echo "<div class='food-description'>";
-            echo "<h3 class='food-title'>" . $row['f_title'] . "</h3>";
-            $truncatedDesc = substr($row['f_desc'], 0, 100);
-            echo "<p class='truncatedDesc' style='font-size:14px;'>".$truncatedDesc."<span class='see-more'style='color:#3dd961;'>...</span></p>";
-            // echo "<p>" . $row['f_desc'] . "</p>";
+            echo "<h6 class='food-title'>" . $row['f_title'] . "</h6>";
             $f_price = isset($row['f_price']) ? $row['f_price'] : '';
             $f_disctprice = isset($row['f_disctprice']) ? $row['f_disctprice'] : '';
-
-            // Calculate discount percentage
             if ($f_price != 0) {
                 $f_discount = (($f_price - $f_disctprice) / $f_price) * 100;
             } else {
                 $f_discount = 0;
             }
-            echo "<p class='food-price' style='font-size:18px;color:#32fa57;'>Price: <del>&#36; " . $f_price . "</del></p>";
-            echo "<p class='food-price' style='font-size:18px;color:#06bd27;'>Discount Price: &#36; " . number_format($f_disctprice, 2) . "</p>";
+            echo "<p class='food-price' style='font-size:18px;color:#06bd27;'>Price: &#36; " . number_format($f_disctprice, 2) . "</p>";
             echo "<div class='discountprice'>"; 
             echo number_format($f_discount, 2) . " &#37;<br> OFF"; 
             echo "</div>";
             echo "</div>";
             echo "</div>";
             echo "</div>";
-
-            if ($count % 2 !== 0 || $count === $result->num_rows - 1) {
-                echo "</div>";
-            }
             $count++;
         }
+    }
+    echo "</div>";
         $sqlCount = "SELECT COUNT(*) AS total FROM tbl_food";
         $resultCount = $conn->query($sqlCount);
         $rowCount = $resultCount->fetch_assoc()['total'];
@@ -141,6 +133,7 @@ if ($result && $result->num_rows>0) {
 ?>
         
             
+        </div>
         </div>
 
         <?php
@@ -280,6 +273,15 @@ if ($result && $result->num_rows>0) {
 
 
         <!--Script for control the quantity message end-->
+        <script>
+        document.getElementById("searchForm").addEventListener("submit", function(event) {
+            var searchInput = document.getElementById("searchInput").value.trim();
+            if (searchInput === "") {
+                event.preventDefault(); // Cancel form submission
+                alert("Please enter your favourite food!");
+            }
+        });
+        </script>
 
 
 <!--Footer area start-->
