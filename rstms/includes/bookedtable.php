@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['bookedtable_form'])) {
     </div>
 
     <div class="form-container">
-        <h2>Book a Table</h2>
+        <h2>Book Your Dining</h2>
         <?php if (!empty($success)) : ?>
             <p style="color: green;"><?php echo $success; ?></p>
         <?php endif; ?>

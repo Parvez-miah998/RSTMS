@@ -111,6 +111,7 @@
 		border-radius: 10px;
 		border: none;
 		color: #ffff;
+		cursor: pointer;
 	}
 </style>
 

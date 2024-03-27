@@ -109,6 +109,7 @@
 		border-radius: 10px;
 		border: none;
 		color: #ffff;
+		cursor: pointer;
 	}
 	#rating{
 		margin-left: 20px;

@@ -7,21 +7,6 @@
         header("Location: login.php");
         exit();
     }
-
-    $email = $_SESSION['user'];
-$user_sql = $conn->prepare("SELECT u_id FROM users WHERE u_email = ?");
-$user_sql->bind_param("s", $email);
-$user_sql->execute();
-$user_result = $user_sql->get_result();
-
-if ($user_row = $user_result->fetch_assoc()) {
-    $user_id = $user_row['u_id'];
-    $user_result->close(); 
-
-    $order_sql = $conn->prepare("SELECT * FROM tbl_payment WHERE u_id = ? ORDER BY p_id DESC");
-    $order_sql->bind_param("i", $user_id);
-    $order_sql->execute();
-    $order_result = $order_sql->get_result();
 ?>
 
 <div class="container-fluid">
@@ -48,54 +33,95 @@ if ($user_row = $user_result->fetch_assoc()) {
                 <tbody>
                     <?php
                     $totalAmount = 0;
-                    while ($row = mysqli_fetch_assoc($order_result)) {
-                        echo "<tr>";
-                        echo "<td>{$row['order_id']}</td>";
-                        echo "<td>{$row['u_name']}</td>";
-                        echo "<td>{$row['f_title']}</td>";
-                        echo "<td>{$row['o_quantity']}</td>";
-                        echo "<td>&#36; {$row['f_disctprice']}</td>";
-                        echo "<td>{$row['f_vat']} &percnt;</td>";
-                        echo "<td>&#36; {$row['total_amount']}</td>";
-                        echo "<td>{$row['o_date']}</td>";
-                        echo "<td>{$row['t_name']}</td>";
-                        if (empty($row['payment_status'])) {
-                            $order_id = $row['order_id'];
-                            $totalAmount_sql = $conn->prepare("SELECT amount FROM tbl_payment WHERE order_id = ?");
-                            $totalAmount_sql->bind_param("s", $order_id);
-                            $totalAmount_sql->execute();
-                            $totalAmount_result = $totalAmount_sql->get_result();
+                    if (isset($_SESSION['user'])) {
+                        $email = $_SESSION['user'];
+                        $user_sql = $conn->prepare("SELECT u_id FROM users WHERE u_email = ?");
+                        $user_sql->bind_param("s", $email);
+                        $user_sql->execute();
+                        $user_result = $user_sql->get_result();
 
-                            if ($totalAmount_row = $totalAmount_result->fetch_assoc()) {
-                                $amount = number_format($totalAmount_row['amount'], 2);
-                                echo "<td>";
-                                echo "Payable Amount: $amount";
-                                echo '<form action="../thankyou.php" method="POST">';
-                                echo '<input type="hidden" name="total_amount" value="' . $amount . '">';
-                                echo '<script 
-                                        src="https://checkout.stripe.com/checkout.js"
-                                        class="stripe-button"
-                                        data-key="' . $publishableKey . '"
-                                        data-amount="' . $amount * 100 . '"
-                                        data-name="KING RESTAURANT"
-                                        data-description="A1 Restaurent"
-                                        data-image="https://img.freepik.com/premium-vector/cute-panda-paws-up-wall-panda-face-cartoon-icon_42750-498.jpg"
-                                        data-currency="usd">
-                                     </script>';
-                                echo '</form>';
-                                echo "</td>";
+                        if ($user_row = $user_result->fetch_assoc()) {
+                            $user_id = $user_row['u_id'];
+                            $user_result->close();
+                            $rowsPerPage = 10;
+                            if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+                                $currentPage = $_GET['page'];
                             }
-                        } 
-                        else {
-                            echo "<td>{$row['payment_status']}</td>";
-                        }  
-                           
-                        echo "</td>";
-                        echo "</tr>";
+                            else{
+                                $currentPage = 1;
+                            }
+                            $offset = ($currentPage - 1) * $rowsPerPage; 
+
+                            $order_sql = $conn->prepare("SELECT * FROM tbl_payment WHERE u_id = ? ORDER BY p_id DESC LIMIT $rowsPerPage OFFSET $offset");
+                            $order_sql->bind_param("i", $user_id);
+                            $order_sql->execute();
+                            $order_result = $order_sql->get_result();
+                        while ($row = mysqli_fetch_assoc($order_result)) {
+                            echo "<tr>";
+                            echo "<td>{$row['order_id']}</td>";
+                            echo "<td>{$row['u_name']}</td>";
+                            echo "<td>{$row['f_title']}</td>";
+                            echo "<td>{$row['o_quantity']}</td>";
+                            echo "<td>&#36; {$row['f_disctprice']}</td>";
+                            echo "<td>{$row['f_vat']} &percnt;</td>";
+                            echo "<td>&#36; {$row['total_amount']}</td>";
+                            echo "<td>{$row['o_date']}</td>";
+                            echo "<td>{$row['t_name']}</td>";
+                            if (empty($row['payment_status'])) {
+                                $order_id = $row['order_id'];
+                                $totalAmount_sql = $conn->prepare("SELECT amount FROM tbl_payment WHERE order_id = ?");
+                                $totalAmount_sql->bind_param("s", $order_id);
+                                $totalAmount_sql->execute();
+                                $totalAmount_result = $totalAmount_sql->get_result();
+
+                                if ($totalAmount_row = $totalAmount_result->fetch_assoc()) {
+                                    $amount = number_format($totalAmount_row['amount'], 2);
+                                    echo "<td>";
+                                    echo "Payable Amount: $amount";
+                                    echo '<form action="../thankyou.php" method="POST">';
+                                    echo '<input type="hidden" name="total_amount" value="' . $amount . '">';
+                                    echo '<script 
+                                            src="https://checkout.stripe.com/checkout.js"
+                                            class="stripe-button"
+                                            data-key="' . $publishableKey . '"
+                                            data-amount="' . $amount * 100 . '"
+                                            data-name="KING RESTAURANT"
+                                            data-description="A1 Restaurent"
+                                            data-image="https://img.freepik.com/premium-vector/cute-panda-paws-up-wall-panda-face-cartoon-icon_42750-498.jpg"
+                                            data-currency="usd">
+                                         </script>';
+                                    echo '</form>';
+                                    echo "</td>";
+                                }
+                            } 
+                            else {
+                                echo "<td>{$row['payment_status']}</td>";
+                            }  
+                               
+                            echo "</td>";
+                            echo "</tr>";
+                          }
+                          $sql_page = "SELECT COUNT(*) AS total FROM tbl_payment";
+                          $result_page = $conn->query($sql_page);
+                          $row_page = $result_page->fetch_assoc()['total'];
+                          $totalPages = ceil($row_page/$rowsPerPage);
                       }
                     ?>   
                 </tbody>
             </table>
+        </div>
+        <div class="pagination" style="margin-bottom:15px;">
+            <?php if($totalPages>1) : ?>
+                <ul>
+                    <li> <a href="?page=1">&laquo;</a></li>
+                    <?php for($page=1; $page<=$totalPages; $page++) : ?>
+                        <li <?php if($page == $currentPage) echo "class='active'"; ?>>
+                            <a href="?page=<?php echo $page; ?>"><?php echo $page; ?></a>
+                        </li>
+                    <?php endfor;?>
+                    <li> <a href="?page=<?php echo $totalPages; ?>">&raquo;</a></li>
+                </ul>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -300,6 +326,39 @@ else{
     .tbl-pay th, .tbl-pay td{
         border: 1px solid #ddd;
     }
+    .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pagination ul li {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .pagination ul li a {
+            display: block;
+            padding: 5px 10px;
+            text-decoration: none;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            color: #333;
+        }
+
+        .pagination ul li.active a {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .pagination ul li a:hover {
+            background-color: #f0f0f0;
+        }
 </style>
 
 <!--Style area for Viewall Page End-->

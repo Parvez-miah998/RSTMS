@@ -40,11 +40,23 @@
     </section>
     <!--Testimonial area end-->
 
-    <!--Contact area end-->
+    <!--Contact area start-->
     <section id="contact">
         <?php include('includes/contactus.php')?>
     </section>
     <!--Contact area end-->
+
+    <!--Our chef area start-->
+    <section id="#">
+        <?php include('includes/chef.php')?>
+    </section>
+    <!--Our chef area end-->
+
+    <!--follow us area start-->
+    <section id="#">
+        <?php include('includes/followus.php')?>
+    </section>
+    <!--follow us area end-->
     
 
     <!--Footer area start-->

@@ -66,7 +66,7 @@ if (isset($_SESSION['u_email'])) {
                 <li><a href="#about" style="font-size: 16px!important;">About</a></li>
                 <li><a href="#food" style="font-size: 16px!important;">Category</a></li>
                 <li><a href="#food-menu" style="font-size: 16px!important;">Menu</a></li>
-                <li><a href="#BookedTable" style="font-size: 16px!important;">Table Booked</a></li>
+                <li><a href="#BookedTable" style="font-size: 16px!important;">Book a Dining</a></li>
                 <li><a href="#testimonials" style="font-size: 16px!important;">Testimonial</a></li>
                 <li><a href="#contact" style="font-size: 16px!important;">Contact</a></li>
                 <li><a href="allcart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>

@@ -95,7 +95,7 @@ if (isset($_SESSION['user'])) {
                 <p><strong><i class="fa-solid fa-cake-candles"></i> Date of Birth:</strong> <?php echo $udob; ?></p>
                 
             </div>
-            <button class="btn btn-primary" id="editButton" style="margin-left: 25%;margin-top: 15px;"><i class="fas fa-pen"></i> Edit</button>
+            <button class="btn btn-primary" id="editButton" style="margin-left: 25%;margin-top: 15px;cursor: pointer;"><i class="fas fa-pen"></i> Edit</button>
         </div>
 		    </div>
 		</div>
@@ -144,7 +144,7 @@ if (isset($_SESSION['user'])) {
 			            <div class="mb-3 row" style="margin-left: 20px;">
 						    <label style="margin-left: 10px;">Choose a file:</label>
 						    <input type="file" name="user_image" id="user_image" class="form-control" style="display: none;">
-						    <label for="user_image" class="btn btn-primary">
+						    <label for="user_image" class="btn btn-primary" style="cursor: pointer;">
 						        Upload Image
 						    </label>
 						    <?php if (isset($uimage)) { ?>
@@ -154,7 +154,7 @@ if (isset($_SESSION['user'])) {
 						    <?php } ?>
 						</div>
 			            <!-- Save changes button-->
-			            <button class="btn btn-primary" id="action-btn" type="submit" name="saveChange">Save changes</button>
+			            <button class="btn btn-primary" id="action-btn" type="submit" name="saveChange" style="cursor: pointer;">Save changes</button>
 			        </form>
 			    </div>
 			    <?php if (isset($passmsg)) {

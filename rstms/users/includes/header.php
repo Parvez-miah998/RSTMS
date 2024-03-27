@@ -37,7 +37,7 @@
         <a class="nav-link" href="feedback.php" target="__blank"  style="font-family: Arial;"><i class="fa-solid fa-comments"></i> Feedback</a>
         <a class="nav-link" href="changepassword.php" target="__blank"  style="font-family: Arial;"><i class="fa-solid fa-lock"></i> Change Password</a>
         <a class="nav-link" href="viewall.php" target="__blank"  style="font-family: Arial;"><i class="fa-solid fa-eye"></i> View All</a>
-        <a class="nav-link" href="notification.php"  target="__blank"  style="font-family: Arial;"><i class="fa-solid fa-bell"></i> Notifications</a>
+        <!-- <a class="nav-link" href="notification.php"  target="__blank"  style="font-family: Arial;"><i class="fa-solid fa-bell"></i> Notifications</a> -->
         <a class="nav-link" href="../logout.php"  style="font-family: Arial;color: #fa0710;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
     </nav>
 

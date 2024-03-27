@@ -409,7 +409,7 @@ if (isset($_SESSION['user'])) {
         var currentValue = parseInt(quantityElement.text()) || 0;
         currentValue++;
         quantityElement.text(currentValue);
-        updateQuantity(orderId, currentValue);
+        updateQuantity(orderId, currentValue, row); // Pass the row to updateQuantity
     });
 
     $('.decrease-btn').click(function() {
@@ -420,7 +420,7 @@ if (isset($_SESSION['user'])) {
         if (currentValue > 0) {
             currentValue--;
             quantityElement.text(currentValue);
-            updateQuantity(orderId, currentValue);
+            updateQuantity(orderId, currentValue, row); // Pass the row to updateQuantity
         }
     });
 
@@ -459,6 +459,7 @@ if (isset($_SESSION['user'])) {
         $('.total-amount-display').text('$' + totalAmount.toFixed(2));
     }
 });
+
 
 </script>
 
